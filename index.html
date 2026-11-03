@@ -107,9 +107,9 @@ const STOP=new Set("của và các cho với trong được những này một n
 function digest(){const day=Date.now()/1000-86400,T=D.items.filter(x=>x.time>day);
  const f={};T.forEach(x=>{const w=x.title.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu," ").split(/\s+/).filter(Boolean);for(let i=0;i<w.length-1;i++){if(STOP.has(w[i])||STOP.has(w[i+1])||/^\d+$/.test(w[i]))continue;const k=w[i]+" "+w[i+1];f[k]=(f[k]||0)+1}});
  $("kw").innerHTML=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,14).map(([k,n])=>`<span>#${esc(k)} <b style="color:var(--y)">${n}</b></span>`).join("");
- $("digest").innerHTML=CH.slice(1).map(c=>{const L=T.filter(x=>x.channel==c[0]);if(!L.length)return"";const srcs=new Set(L.map(x=>x.source)).size;
+ $("digest").innerHTML=CH.slice(1).map(c=>{const L=mix(T.filter(x=>x.channel==c[0]));if(!L.length)return"";const srcs=new Set(L.map(x=>x.source)).size;
   return `<div class="dg"><h4>${c[1]}</h4><div class="meta">${L.length} tin trong 24h từ ${srcs} nguồn</div><ul>${L.slice(0,3).map(x=>`<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.title)}</a> <span class="meta">(${esc(x.source)})</span></li>`).join("")}</ul></div>`}).join("")}
-function ticker(){const L=D.items.slice(0,25);$("tk").innerHTML=L.map(x=>`<a href="${esc(x.link)}" target="_blank" rel="noopener"><b>${new Date(x.time*1000).toLocaleTimeString("vi-VN",{timeZone:TZ,hour:"2-digit",minute:"2-digit"})}</b>${esc(x.title)} <span class="meta">— ${esc(x.source)}</span></a>`).join("");$("tk").style.animationDuration=Math.max(60,L.length*9)+"s"}
+function ticker(){const L=mix(D.items.slice(0,120)).slice(0,25);$("tk").innerHTML=L.map(x=>`<a href="${esc(x.link)}" target="_blank" rel="noopener"><b>${new Date(x.time*1000).toLocaleTimeString("vi-VN",{timeZone:TZ,hour:"2-digit",minute:"2-digit"})}</b>${esc(x.title)} <span class="meta">— ${esc(x.source)}</span></a>`).join("");$("tk").style.animationDuration=Math.max(60,L.length*9)+"s"}
 async function load(first){try{const r=await fetch("data/news.json?t="+Date.now(),{cache:"no-store"});D=await r.json();
  $("upd").textContent="Cập nhật lúc "+new Date(D.updated*1000).toLocaleString("vi-VN",{timeZone:TZ,hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit"});
  $("srcs").textContent="Nguồn: "+[...new Set(D.sources_ok.map(s=>s[0]))].join(", ")+".";
