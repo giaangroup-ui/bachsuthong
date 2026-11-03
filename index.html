@@ -1,0 +1,129 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bách Sự Thông – Tin tức mỗi ngày</title>
+<meta name="description" content="Tổng hợp tin kinh tế thế giới, thời sự, kinh tế – xã hội Việt Nam, tài chính – chứng khoán từ các báo lớn.">
+<meta name="theme-color" content="#0a0e1e"><link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Bách Sự Thông">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e1e;--p:#121833;--p2:#1b2347;--red:#c8102e;--y:#ffc800;--t:#eef1ff;--m:#9aa3c7}
+html,body{background:var(--bg);color:var(--t);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;height:100%}
+a{color:inherit;text-decoration:none}
+header{display:flex;align-items:center;gap:12px;padding:10px 16px;padding-top:max(10px,env(safe-area-inset-top));background:linear-gradient(90deg,#0d1330,#1a0f2a);border-bottom:2px solid var(--red);position:sticky;top:0;z-index:20}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px}
+.logo b{background:var(--red);padding:4px 8px;border-radius:6px;letter-spacing:1px;border-bottom:3px solid var(--y)}
+.live{background:var(--red);font-size:11px;font-weight:700;padding:3px 7px;border-radius:4px;animation:bl 1.6s infinite}
+@keyframes bl{50%{opacity:.45}}
+.clock{margin-left:auto;text-align:right;font-variant-numeric:tabular-nums}
+.clock .t{font-size:22px;font-weight:700}.clock .d,.upd{font-size:12px;color:var(--m)}
+nav{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;background:var(--p);scrollbar-width:none;position:sticky;top:62px;z-index:19}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:none;border:1px solid #2b3566;background:var(--p2);color:var(--t);padding:8px 14px;border-radius:999px;font-size:14px;cursor:pointer;white-space:nowrap}
+nav button .n{color:var(--y);font-weight:700;margin-right:6px}
+nav button.on{background:var(--red);border-color:var(--red)}
+main{max-width:1400px;margin:0 auto;padding:14px 16px 90px}
+.stage{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+.hero{position:relative;border-radius:14px;overflow:hidden;background:#000;aspect-ratio:16/9;min-height:240px;display:block}
+.hero img{width:100%;height:100%;object-fit:cover;transition:opacity .6s}
+.hero .ov{position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,.92));display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.badge{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;margin-bottom:8px}
+.badge .on{background:var(--red);padding:3px 8px;border-radius:4px}.badge .src{background:rgba(255,255,255,.15);padding:3px 8px;border-radius:4px}
+.hero h1{font-size:clamp(20px,2.6vw,34px);line-height:1.25;text-shadow:0 2px 8px #000}
+.hero p{color:#d4d8ee;margin-top:8px;font-size:15px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.prog{position:absolute;left:0;bottom:0;height:4px;background:var(--y);width:0}
+.ctrl{position:absolute;top:12px;right:12px;display:flex;gap:6px;z-index:2}
+.ctrl button{background:rgba(0,0,0,.55);border:1px solid #fff3;color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px}
+.side{background:var(--p);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;max-height:min(70vh,560px);overflow:auto}
+.side h3,.sec h3{font-size:14px;color:var(--y);text-transform:uppercase;letter-spacing:.5px;padding:4px 6px}
+.it{display:flex;gap:10px;padding:8px;border-radius:10px;cursor:pointer}
+.it:hover,.it.cur{background:var(--p2)}.it.cur{outline:1px solid var(--red)}
+.it img{width:86px;height:56px;object-fit:cover;border-radius:6px;flex:none;background:#223}
+.it .tt{font-size:14px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.meta{font-size:11px;color:var(--m);margin-top:3px}
+.sec{margin-top:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.card{background:var(--p);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#223}
+.card div{padding:10px}.card .tt{font-weight:600;line-height:1.35;font-size:15px}
+.card p{font-size:13px;color:var(--m);margin-top:6px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.digest{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.dg{background:var(--p);border-radius:12px;padding:12px;border-top:3px solid var(--red)}
+.dg h4{font-size:15px;margin-bottom:6px}.dg li{font-size:14px;line-height:1.4;margin:6px 0 6px 18px}
+.kw{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.kw span{background:var(--p2);padding:4px 10px;border-radius:999px;font-size:13px}
+.ticker{position:fixed;left:0;right:0;bottom:0;display:flex;background:#000;border-top:2px solid var(--red);z-index:30;padding-bottom:env(safe-area-inset-bottom);height:calc(40px + env(safe-area-inset-bottom))}
+.ticker .lb{flex:none;background:var(--red);font-weight:800;padding:0 12px;display:flex;align-items:center;font-size:14px}
+.ticker .w{overflow:hidden;flex:1;display:flex;align-items:center}
+.ticker .r{display:inline-flex;white-space:nowrap;animation:mq linear infinite;padding-left:100%}
+.ticker .r a{margin-right:40px;font-size:15px}.ticker .r a b{color:var(--y);margin-right:6px}
+.ticker:hover .r{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-100%)}}
+#inst{position:fixed;right:14px;bottom:56px;z-index:40;background:var(--y);color:#000;border:0;font-weight:700;padding:10px 14px;border-radius:999px;box-shadow:0 4px 18px #0008;cursor:pointer;display:none}
+.foot{color:var(--m);font-size:12px;margin-top:24px;line-height:1.6}
+.empty{padding:40px;text-align:center;color:var(--m)}
+@media(max-width:900px){.stage{grid-template-columns:1fr}.side{max-height:none}}
+@media(max-width:560px){.logo span{display:none}.clock .t{font-size:18px}header{padding:8px 12px}nav{top:54px;padding:8px 12px}main{padding:10px 10px 90px}.hero{aspect-ratio:4/3}.hero .ov{padding:14px}.hero p{display:none}.grid{grid-template-columns:1fr 1fr;gap:8px}.card .tt{font-size:13px}.card p{display:none}}
+</style></head><body>
+<header><div class="logo"><b>BST</b><span>Bách Sự Thông</span><i class="live">● TRỰC TIẾP</i></div>
+<div class="clock"><div class="t" id="ck">--:--</div><div class="d" id="dt"></div><div class="upd" id="upd">Đang tải…</div></div></header>
+<nav id="nav"></nav>
+<main>
+<div class="stage">
+ <a class="hero" id="hero" target="_blank" rel="noopener"><img id="himg" alt=""><div class="ov"><div class="badge"><span class="on">ĐANG PHÁT</span><span class="src" id="hsrc"></span><span id="htime" style="color:#ccd"></span></div><h1 id="htt"></h1><p id="hsum"></p></div><div class="prog" id="prog"></div></a>
+ <div class="side"><h3 id="sidet">Danh sách phát</h3><div id="list"></div></div>
+</div>
+<section class="sec" id="dgs"><h3>📋 Tóm tắt hôm nay</h3><div class="kw" id="kw"></div><div class="digest" id="digest"></div></section>
+<section class="sec"><h3 id="moret">Tin khác</h3><div class="grid" id="grid"></div></section>
+<div class="foot">Bách Sự Thông chỉ hiển thị tiêu đề, tóm tắt ngắn và ảnh đại diện từ RSS công khai của các báo; bấm vào tin để đọc bài gốc trên trang báo. Bản quyền nội dung thuộc về các cơ quan báo chí. <span id="srcs"></span><br>Phím tắt: ← → đổi kênh · ↑ ↓ đổi tin · Space tạm dừng/phát.</div>
+</main>
+<div class="ticker"><div class="lb">🔥 TIN NÓNG</div><div class="w"><div class="r" id="tk"></div></div></div>
+<button id="inst">📲 Cài app</button>
+<script>
+const CH=[["all","Tất cả"],["the-gioi","Kinh tế thế giới"],["thoi-su","Thời sự trong nước"],["kinh-te-vn","Kinh tế – Xã hội VN"],["tai-chinh","Tài chính – Chứng khoán"],["bat-dong-san","Bất động sản"]];
+const $=id=>document.getElementById(id),esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PH="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 9"><rect width="16" height="9" fill="#1b2347"/><text x="8" y="5.6" font-size="3" text-anchor="middle" fill="#c8102e" font-family="Arial" font-weight="bold">BST</text></svg>');
+let D=null,ch=+(localStorage.bstCh||0),idx=0,play=true,timer=null,t0=0;const DUR=8000;
+function ago(ts){const m=Math.max(0,(Date.now()/1000-ts)/60|0);return m<1?"vừa xong":m<60?m+" phút trước":m<1440?(m/60|0)+" giờ trước":new Date(ts*1000).toLocaleDateString("vi-VN")}
+function items(){if(!D)return[];const c=CH[ch][0];return c==="all"?D.items:D.items.filter(x=>x.channel===c)}
+function img(x){return x.image||PH}
+function tick(){const n=new Date();$("ck").textContent=n.toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$("dt").textContent=n.toLocaleDateString("vi-VN",{weekday:"long",day:"2-digit",month:"2-digit",year:"numeric"});
+ if(play&&t0){const p=Math.min(1,(Date.now()-t0)/DUR);$("prog").style.width=p*100+"%";if(p>=1)go(idx+1)}}
+function nav(){$("nav").innerHTML=CH.map((c,i)=>`<button class="${i==ch?"on":""}" data-i="${i}"><span class="n">${String(i).padStart(2,"0")}</span>${c[1]}</button>`).join("");
+ $("nav").querySelectorAll("button").forEach(b=>b.onclick=()=>setCh(+b.dataset.i));const on=$("nav").querySelector(".on");on&&on.scrollIntoView({inline:"center",block:"nearest"})}
+function setCh(i){ch=(i+CH.length)%CH.length;localStorage.bstCh=ch;idx=0;nav();render()}
+function go(i){const L=items().slice(0,20);if(!L.length)return;idx=(i+L.length)%L.length;const x=L[idx];
+ $("hero").href=x.link;const im=$("himg");im.style.opacity=0;setTimeout(()=>{im.src=img(x);im.onerror=()=>im.src=PH;im.style.opacity=1},150);
+ $("hsrc").textContent=x.source+" · "+CH.find(c=>c[0]==x.channel)[1];$("htime").textContent=ago(x.time);$("htt").textContent=x.title;$("hsum").textContent=x.summary;
+ document.querySelectorAll("#list .it").forEach((e,j)=>e.classList.toggle("cur",j==idx));const c=document.querySelector("#list .cur");c&&c.scrollIntoView({block:"nearest"});t0=Date.now()}
+function render(){const L=items();$("sidet").textContent="📺 "+CH[ch][1]+" ("+L.length+" tin)";
+ if(!L.length){$("list").innerHTML='<div class="empty">Chưa có tin</div>';return}
+ $("list").innerHTML=L.slice(0,20).map((x,j)=>`<div class="it" data-j="${j}"><img loading="lazy" src="${esc(img(x))}" onerror="this.src=PH"><div><div class="tt">${esc(x.title)}</div><div class="meta">${esc(x.source)} · ${ago(x.time)}</div></div></div>`).join("");
+ $("list").querySelectorAll(".it").forEach(e=>e.onclick=()=>go(+e.dataset.j));
+ $("moret").textContent="Tin khác – "+CH[ch][1];
+ $("grid").innerHTML=L.slice(20,80).map(x=>`<a class="card" href="${esc(x.link)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(img(x))}" onerror="this.src=PH"><div><div class="tt">${esc(x.title)}</div><p>${esc(x.summary)}</p><div class="meta">${esc(x.source)} · ${ago(x.time)}</div></div></a>`).join("");
+ go(0)}
+const STOP=new Set("của và các cho với trong được những này một người không đã có là từ theo khi về tại đến sẽ hơn năm ngày tháng sau như để vào ra lại nhiều cũng đang việc trên thể nhất bị the of to in and a for on is with at as by from new that after".split(" "));
+function digest(){const day=Date.now()/1000-86400,T=D.items.filter(x=>x.time>day);
+ const f={};T.forEach(x=>{const w=x.title.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu," ").split(/\s+/).filter(Boolean);for(let i=0;i<w.length-1;i++){if(STOP.has(w[i])||STOP.has(w[i+1])||/^\d+$/.test(w[i]))continue;const k=w[i]+" "+w[i+1];f[k]=(f[k]||0)+1}});
+ $("kw").innerHTML=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,14).map(([k,n])=>`<span>#${esc(k)} <b style="color:var(--y)">${n}</b></span>`).join("");
+ $("digest").innerHTML=CH.slice(1).map(c=>{const L=T.filter(x=>x.channel==c[0]);if(!L.length)return"";const srcs=new Set(L.map(x=>x.source)).size;
+  return `<div class="dg"><h4>${c[1]}</h4><div class="meta">${L.length} tin trong 24h từ ${srcs} nguồn</div><ul>${L.slice(0,3).map(x=>`<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.title)}</a> <span class="meta">(${esc(x.source)})</span></li>`).join("")}</ul></div>`}).join("")}
+function ticker(){const L=D.items.slice(0,25);$("tk").innerHTML=L.map(x=>`<a href="${esc(x.link)}" target="_blank" rel="noopener"><b>${new Date(x.time*1000).toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})}</b>${esc(x.title)} <span class="meta">— ${esc(x.source)}</span></a>`).join("");$("tk").style.animationDuration=Math.max(60,L.length*9)+"s"}
+async function load(first){try{const r=await fetch("data/news.json?t="+Date.now(),{cache:"no-store"});D=await r.json();
+ $("upd").textContent="Cập nhật lúc "+new Date(D.updated*1000).toLocaleString("vi-VN",{hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit"});
+ $("srcs").textContent="Nguồn: "+[...new Set(D.sources_ok.map(s=>s[0]))].join(", ")+".";
+ ticker();digest();if(first)render();}catch(e){$("upd").textContent="Không tải được tin – kiểm tra mạng";if(first)$("list").innerHTML='<div class="empty">Không tải được tin</div>'}}
+const pb=document.createElement("div");pb.className="ctrl";pb.innerHTML='<button id="pv">⏮</button><button id="pp">⏸</button><button id="nx">⏭</button>';$("hero").appendChild(pb);
+pb.onclick=e=>{e.preventDefault();e.stopPropagation();const id=e.target.id;if(id=="pv")go(idx-1);if(id=="nx")go(idx+1);if(id=="pp"){play=!play;e.target.textContent=play?"⏸":"▶";t0=Date.now()}};
+addEventListener("keydown",e=>{if(e.key=="ArrowRight")setCh(ch+1);else if(e.key=="ArrowLeft")setCh(ch-1);else if(e.key=="ArrowDown"){e.preventDefault();go(idx+1)}else if(e.key=="ArrowUp"){e.preventDefault();go(idx-1)}else if(e.key==" "){e.preventDefault();$("pp").click()}});
+let sx=0,sy=0;$("hero").addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+$("hero").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){go(idx+(dx<0?1:-1))}});
+$("nav").addEventListener("wheel",e=>{if(e.deltaY){$("nav").scrollLeft+=e.deltaY}},{passive:true});
+nav();load(true);setInterval(tick,250);setInterval(()=>load(false),10*60*1000);
+let dp;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;$("inst").style.display="block"});
+const ios=/iphone|ipad|ipod/i.test(navigator.userAgent),sa=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+if(ios&&!sa)$("inst").style.display="block";
+$("inst").onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$("inst").style.display="none"}else alert("Trên iPhone/iPad: mở bằng Safari → bấm nút Chia sẻ → chọn \"Thêm vào MH chính\".")};
+addEventListener("appinstalled",()=>$("inst").style.display="none");
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
+</script></body></html>
