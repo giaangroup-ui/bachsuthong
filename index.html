@@ -217,7 +217,7 @@ if("mediaSession" in navigator){const M=navigator.mediaSession,h=(k,f)=>{try{M.s
 AU.preload="auto";AU.setAttribute("playsinline","");
 function narrate(x){if(!x)return;stopSpeak();if(!play)return;const my=tok;
  const cues=(AUD[x.id]||{})[MC];setMS(x);
- if(!cues&&BG()){if(++skips>TVN){skips=0;return}go(idx+1);return}skips=0;
+ if(!cues){const L=items().slice(0,TVN),n=nextWithAudio(idx);if(n&&++skips<=TVN){go(L.indexOf(n));return}if(BG()){skips=0;return}}skips=0;
  if(cues&&!muted&&vol>0){const bg=BG();if(!bg)jingle();const startMp3=()=>{if(my!==tok)return;AU.src=aurl(x);AU.volume=vol;
   AU.ontimeupdate=()=>{if(my!==tok)return;const t=AU.currentTime;if(document.hidden)return;let c="";for(const q of cues){if(q[0]<=t+0.15)c=q[1]}$("sub").textContent=c||(cues[0]||[0,""])[1];if(AU.duration)$("prog").style.width=(t/AU.duration*100)+"%"};
   AU.onloadedmetadata=msPos;
@@ -250,7 +250,8 @@ async function route(){const m=location.hash.match(/^#tin\/(\w+)/);const rd=$("r
  if(!D)return;const x=BY[m[1]];if(!x){location.hash="";return}
  if(rd.hidden){wasTv=tvOn&&play;if(wasTv){play=false;$("pp").textContent="▶";stopSpeak()}}
  rd.hidden=false;document.body.style.overflow="hidden";rd.scrollTop=0;const t=L_();
- const head=`<img class="cv" src="${esc(img(x))}" onerror="this.src=PH" alt=""><h1>${esc(x.title)}</h1><div class="meta">${esc(x.source)} · ${L_().ch[CH.findIndex(c=>c[0]==x.channel)]} · ${new Date(x.time*1000).toLocaleString(t.loc,{timeZone:TZ,hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit",year:"numeric"})} (${ago(x.time)})${trl(x.link)}</div><p class="lead">${esc(x.summary)}</p>${x.tr&&x.tr!="x"?`<p class="note">🌐 ${esc(t.trn(x.source))}</p>`:""}`;
+ const head=`<img class="cv" src="${esc(img(x))}" onerror="this.src=PH" alt=""><h1>${esc(x.title)}</h1><div class="meta">${esc(x.source)} · ${L_().ch[CH.findIndex(c=>c[0]==x.channel)]} · ${new Date(x.time*1000).toLocaleString(t.loc,{timeZone:TZ,hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit",year:"numeric"})} (${ago(x.time)})${trl(x.link)}</div><p class="lead">${esc(x.summary)}</p>${(AUD[x.id]||{})[MC]?`<button id="rdlisten" style="margin:6px 0 10px;background:var(--y);color:#000;border:0;border-radius:999px;padding:8px 16px;font-weight:700;cursor:pointer">🎧 ${MC=="m"?t.mcM:t.mcF}</button>`:""}${x.tr&&x.tr!="x"?`<p class="note">🌐 ${esc(t.trn(x.source))}</p>`:""}`;
+ setTimeout(()=>{const lb=$("rdlisten");if(lb)lb.onclick=()=>{stopSpeak();const my=tok;setMS(x);AU.src=aurl(x);AU.volume=vol;AU.onloadedmetadata=msPos;AU.play().then(()=>{if("mediaSession" in navigator)navigator.mediaSession.playbackState="playing"}).catch(()=>{if(my===tok)speakFallback(x,my)})}},0);
  const tail=`<a class="orig" href="${esc(x.link)}" target="_blank" rel="noopener">${esc(t.readat(x.source))}</a>`;
  $("rdbody").innerHTML=head+(x.full?`<div class="tx"><p class="note">${t.artload}</p></div>`:`<p class="note">${t.artfail}</p>`)+tail;
  if(x.full){try{const a=await (await fetch("data/articles/"+x.id+".json")).json();if(location.hash!=="#tin/"+x.id)return;

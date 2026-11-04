@@ -2,8 +2,12 @@
 import json, os, re, time, asyncio, urllib.request, urllib.parse, shutil
 LANGS=["vi","en","zh"]; GT={"vi":"vi","en":"en","zh":"zh-CN"}
 VOICES={"vi":{"f":"vi-VN-HoaiMyNeural","m":"vi-VN-NamMinhNeural"},"en":{"f":"en-US-AriaNeural","m":"en-US-GuyNeural"},"zh":{"f":"zh-CN-XiaoxiaoNeural","m":"zh-CN-YunyangNeural"}}
+TTS_REV="2"  # đổi khi đổi cách chuẩn hoá văn bản -> tạo lại audio
 AUDIO_PER_CH=int(os.environ.get("AUDIO_PER_CH","12")); T0=time.time(); BUDGET=float(os.environ.get("BUDGET","900"))
-os.makedirs("cache/audio",exist_ok=True); os.makedirs("data/articles",exist_ok=True); os.makedirs("data/audio",exist_ok=True)
+os.makedirs("cache/audio",exist_ok=True)
+if (open("cache/audio/.rev").read() if os.path.exists("cache/audio/.rev") else "")!=TTS_REV:
+    shutil.rmtree("cache/audio"); os.makedirs("cache/audio"); open("cache/audio/.rev","w").write(TTS_REV)
+os.makedirs("data/articles",exist_ok=True); os.makedirs("data/audio",exist_ok=True)
 D=json.load(open("data/news.json")); items=D["items"]
 def lang_of(t): return "vi" if re.search(r"[ăâđêôơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]",t,re.I) else ("zh" if re.search(r"[\u4e00-\u9fff]",t) else "en")
 TRF="cache/tr.json"; TR=json.load(open(TRF)) if os.path.exists(TRF) else {}
@@ -87,28 +91,51 @@ def mix(L):
             if i<len(a): o.append(a[i])
         i+=1
     return o
-chans=[None]+sorted({x["channel"] for x in items})
-want=[]
-for c in chans:
-    for x in mix([x for x in items if c is None or x["channel"]==c])[:AUDIO_PER_CH]:
-        if x not in want: want.append(x)
+# Phủ giọng AI cho MỌI danh sách phát mà trình duyệt có thể mở: Tất cả, từng kênh, từng mục con, từng thành phố BĐS
+lists=[items]+[[x for x in items if x["channel"]==c] for c in sorted({x["channel"] for x in items})]
+lists+=[[x for x in items if x["channel"]==c and x.get("sub")==s] for c,s in sorted({(x["channel"],x.get("sub")) for x in items if x.get("sub")})]
+lists+=[[x for x in items if x["channel"]=="bat-dong-san" and x.get("city")==cy] for cy in sorted({x.get("city") for x in items if x["channel"]=="bat-dong-san" and x.get("city")})]
+want=[]; seen=set()
+for L in lists:
+    for x in mix(L)[:AUDIO_PER_CH]:
+        if x["id"] not in seen: seen.add(x["id"]); want.append(x)
+NUMW=r"(\d+(?:[.,]\d+)*)"
+def clean(text,tl):
+    t=re.sub(r"https?://\S+|www\.\S+|\S+@\S+\.\w+","",text)
+    t=re.sub(r"[#*_~|<>\[\]{}\\^`]+"," ",t); t=re.sub(r"[\"“”«»]","",t)
+    t=re.sub(r"\s*[–—]\s*",", ",t); t=re.sub(r"\.{2,}|…",". ",t)
+    if tl=="vi":
+        R=[(r"\bTP\.?\s?HCM\b|\bTPHCM\b","Thành phố Hồ Chí Minh"),(r"\bHN\b","Hà Nội"),(r"\bTP\.\s?","thành phố "),(r"\bUBND\b","Ủy ban nhân dân"),(r"\bBĐS\b","bất động sản"),
+           (r"\bQ([1-4])/(\d{4})","quý \\1 năm \\2"),(r"(?<!ngày )\b(\d{1,2})/(\d{1,2})/(\d{4})\b","ngày \\1 tháng \\2 năm \\3"),(r"\b(\d{1,2})/(\d{4})\b","tháng \\1 năm \\2"),
+           (r"(?<!ngày )\b(\d{1,2})/(\d{1,2})\b(?!/)","ngày \\1 tháng \\2"),(r"\$\s?"+NUMW,"\\1 đô la"),(NUMW+r"\s?(USD|\$)","\\1 đô la Mỹ"),(r"\bUSD\b","đô la Mỹ"),
+           (NUMW+r"\s?(VNĐ|VND|đồng|đ)\b","\\1 đồng"),(r"\bVNĐ\b|\bVND\b","đồng"),(NUMW+r"\s?%","\\1 phần trăm"),(r"%"," phần trăm"),(NUMW+r"\s?(m2|m²)","\\1 mét vuông"),
+           (NUMW+r"\s?(km2|km²)","\\1 ki lô mét vuông"),(NUMW+r"\s?km\b","\\1 ki lô mét"),(NUMW+r"\s?ha\b","\\1 héc ta"),(NUMW+r"\s?kg\b","\\1 ki lô gam"),
+           (r"\bAI\b","Ây Ai"),(r"\bCEO\b","giám đốc điều hành"),(r"\bGDP\b","Gi Đi Pi"),(r"\bVN-?Index\b","VN Index"),(r"&"," và "),(r"\+"," cộng "),(r"\s/\s",", ")]
+        for a,b in R: t=re.sub(a,b,t)
+        t=re.sub(r"(?<=\d)\.(?=\d{3}\b)","",t)  # 1.000 -> 1000 để đọc đúng "một nghìn"
+    else:
+        t=re.sub(r"&"," and " if tl=="en" else "和",t)
+    t=re.sub(r"\s*/\s*",", ",t) if tl!="vi" else t.replace("/"," ")
+    t=re.sub(r"\s+([,.!?;:])",r"\1",t); t=re.sub(r"\s{2,}"," ",t).strip()
+    return t
 jobs=[]
 for x in want:
     for tl in LANGS:
         t,s,f=loc(x,tl)
         if f==-1: continue
-        text=t.rstrip(".。!?！？")+". "+(s or "").rstrip("…")
+        sep=". " if tl!="zh" else "。"
+        text=clean(t.rstrip(".。!?！？"),tl)+sep+clean((s or "").rstrip("…"),tl)
         for g,v in VOICES[tl].items(): jobs.append((x["id"],tl,g,v,text))
 async def tts(job,sem):
     i,tl,g,v,text=job; base=f"cache/audio/{i}.{tl}.{g}"
     if os.path.exists(base+".mp3") and os.path.exists(base+".json"): return True
-    if time.time()-T0>BUDGET+300: return False
+    if time.time()-T0>BUDGET+1200: return False
     import edge_tts
     async with sem:
         for a in range(2):
             try:
                 cues=[]; buf=bytearray()
-                async for ch in edge_tts.Communicate(text,v,rate="+5%").stream():
+                async for ch in edge_tts.Communicate(text,v,rate=("+0%" if tl=="vi" else "+3%")).stream():
                     if ch["type"]=="audio": buf+=ch["data"]
                     elif ch["type"] in("SentenceBoundary","WordBoundary"): cues.append([round(ch["offset"]/1e7,2),ch["text"]])
                 if len(buf)<2000: raise Exception("short")
@@ -116,7 +143,7 @@ async def tts(job,sem):
             except Exception as e: await asyncio.sleep(2)
     return False
 async def run():
-    sem=asyncio.Semaphore(6); return await asyncio.gather(*[tts(j,sem) for j in jobs])
+    sem=asyncio.Semaphore(10); return await asyncio.gather(*[tts(j,sem) for j in jobs])
 res=asyncio.run(run()) if jobs else []
 keep=set(); IDX={tl:{} for tl in LANGS}
 for j,ok in zip(jobs,res):
@@ -125,7 +152,7 @@ for j,ok in zip(jobs,res):
     shutil.copy(f"cache/audio/{base}.mp3",f"data/audio/{base}.mp3")
     IDX[tl].setdefault(i,{})[g]=json.load(open(f"cache/audio/{base}.json"))
 for f in os.listdir("cache/audio"):
-    if f.rsplit(".",1)[0] not in keep: os.remove("cache/audio/"+f)
+    if f!=".rev" and f.rsplit(".",1)[0] not in keep: os.remove("cache/audio/"+f)
 for tl in LANGS: json.dump(IDX[tl],open(f"data/audio/{tl}.json","w"),ensure_ascii=False)
 size=sum(os.path.getsize("data/audio/"+f) for f in os.listdir("data/audio"))
 print(f"tr ok: {sum(len(v) for v in TR.values())} entries, fails={fails}; audio {sum(res)}/{len(jobs)} files, {size/1e6:.1f} MB; {time.time()-T0:.0f}s")
