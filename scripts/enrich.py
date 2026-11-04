@@ -198,4 +198,4 @@ for f in os.listdir("cache/audio"):
     if f!=".rev" and f.rsplit(".",1)[0] not in keep: os.remove("cache/audio/"+f)
 for tl in LANGS: json.dump(IDX[tl],open(f"data/audio/{tl}.json","w"),ensure_ascii=False)
 size=sum(os.path.getsize("data/audio/"+f) for f in os.listdir("data/audio"))
-print('hot',sum(1 for x in items if x.get('hot')),'mc scripts',len(AN['vi']));print(f"tr ok: {sum(len(v) for v in TR.values())} entries, fails={fails}; audio {sum(res)}/{len(jobs)} files, {size/1e6:.1f} MB; {time.time()-T0:.0f}s")
+print('hot',sum(1 for x in items if x.get('hot')),'mc scripts',len(AN['vi']));print(f"tr ok: {sum(len(v) for v in TR.values())} entries, fails={fails}; audio {sum(1 for r in res if r)}/{len(jobs)} files, {size/1e6:.1f} MB; {time.time()-T0:.0f}s")
