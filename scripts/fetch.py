@@ -106,9 +106,13 @@ out=_o
 TOPN=12; DEEPN=20
 ART="cache/articles";os.makedirs(ART,exist_ok=True);os.makedirs("data",exist_ok=True)
 for x in out: x["id"]=hashlib.sha1(x["link"].encode()).hexdigest()[:12]
+import sys; sys.path.insert(0,os.path.dirname(__file__)); from rank import score_hot, wanted
+score_hot(out,now)
 want=[]
 for ch in FEEDS:
     want+= [x for x in out if x["channel"]==ch][:DEEPN if ch in DEEP else TOPN]
+_w={x["id"] for x in want}
+want+=[x for x in wanted(out,int(os.environ.get("AUDIO_PER_CH","12"))) if x["id"] not in _w]  # bài sẽ được MC phân tích cần nội dung đầy đủ
 def extract(x):
     p=f"{ART}/{x['id']}.json"
     if os.path.exists(p): return True

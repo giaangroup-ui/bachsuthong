@@ -1,4 +1,4 @@
-// Cache theo phiên bản: sw.js?v=<commit>. Bản mới -> cache mới, cache cũ bị xóa. (v3: bỏ giọng máy)
+// Cache theo phiên bản: sw.js?v=<commit>. Bản mới -> cache mới, cache cũ bị xóa. (v4: MC phân tích, tin nóng, tự đọc)
 const V=new URL(self.location).searchParams.get("v")||"dev",P="bst-",C=P+V,SHELL=["./","./manifest.webmanifest","./icons/icon-192.png","./icons/icon-512.png"];
 self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>Promise.all(SHELL.map(u=>fetch(u,{cache:"reload"}).then(r=>r.ok&&c.put(u,r)).catch(()=>{})))))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
