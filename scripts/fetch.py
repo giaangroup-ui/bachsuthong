@@ -5,14 +5,15 @@ FEEDS = {
  "the-gioi": [("VnExpress","https://vnexpress.net/rss/the-gioi.rss"),("Tuổi Trẻ","https://tuoitre.vn/rss/the-gioi.rss"),("VnEconomy","https://vneconomy.vn/kinh-te-the-gioi.rss"),("BBC Business","https://feeds.bbci.co.uk/news/business/rss.xml"),("CNBC","https://www.cnbc.com/id/100003114/device/rss/rss.html"),("MarketWatch","https://feeds.content.dowjones.io/public/rss/mw_topstories")],
  "thoi-su": [("VnExpress","https://vnexpress.net/rss/thoi-su.rss"),("Tuổi Trẻ","https://tuoitre.vn/rss/thoi-su.rss"),("Thanh Niên","https://thanhnien.vn/rss/thoi-su.rss"),("VietNamNet","https://vietnamnet.vn/thoi-su.rss")],
  "kinh-te-vn": [("VnExpress","https://vnexpress.net/rss/kinh-doanh.rss"),("Tuổi Trẻ","https://tuoitre.vn/rss/kinh-doanh.rss"),("Thanh Niên","https://thanhnien.vn/rss/kinh-te.rss"),("VietNamNet","https://vietnamnet.vn/kinh-doanh.rss"),("CafeF","https://cafef.vn/vi-mo-dau-tu.rss"),("VnEconomy","https://vneconomy.vn/dau-tu.rss")],
- "tai-chinh": [("CafeF","https://cafef.vn/thi-truong-chung-khoan.rss"),("CafeF","https://cafef.vn/tai-chinh-ngan-hang.rss"),("VnEconomy","https://vneconomy.vn/chung-khoan.rss"),("VnEconomy","https://vneconomy.vn/tai-chinh.rss"),("CNBC","https://www.cnbc.com/id/10000664/device/rss/rss.html")],
+ "tai-chinh": [("CafeF","https://cafef.vn/thi-truong-chung-khoan.rss"),("CafeF","https://cafef.vn/doanh-nghiep.rss"),("CafeF","https://cafef.vn/tai-chinh-ngan-hang.rss"),("CafeF","https://cafef.vn/tai-chinh-quoc-te.rss"),("VnEconomy","https://vneconomy.vn/chung-khoan.rss"),("Vietstock","https://vietstock.vn/830/chung-khoan/co-phieu.rss"),("Vietstock","https://vietstock.vn/1636/nhan-dinh-phan-tich/nhan-dinh-thi-truong.rss"),("Vietstock","https://vietstock.vn/737/doanh-nghiep/hoat-dong-kinh-doanh.rss"),("Vietstock","https://vietstock.vn/772/the-gioi/chung-khoan-the-gioi.rss"),("Vietstock","https://vietstock.vn/761/kinh-te/vi-mo.rss"),("Đầu tư Chứng khoán","https://www.tinnhanhchungkhoan.vn/rss/chung-khoan-1.rss"),("Thanh Niên","https://thanhnien.vn/rss/kinh-te/chung-khoan.rss"),("Tuổi Trẻ","https://tuoitre.vn/rss/tai-chinh.rss"),("CNBC","https://www.cnbc.com/id/15839069/device/rss/rss.html"),("MarketWatch","https://feeds.content.dowjones.io/public/rss/mw_marketpulse"),("Investing.com","https://www.investing.com/rss/news_25.rss")],
  "ai": [("VnExpress","https://vnexpress.net/rss/so-hoa.rss","ai"),("VnExpress","https://vnexpress.net/rss/khoa-hoc-cong-nghe.rss","ai"),("VnExpress","https://vnexpress.net/rss/goc-nhin.rss","ai"),("Tuổi Trẻ","https://tuoitre.vn/rss/cong-nghe.rss","ai"),("Thanh Niên","https://thanhnien.vn/rss/cong-nghe.rss","ai"),("VietNamNet","https://vietnamnet.vn/cong-nghe.rss","ai"),
    ("TechCrunch","https://techcrunch.com/category/artificial-intelligence/feed/"),("The Verge","https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),("MIT Technology Review","https://www.technologyreview.com/topic/artificial-intelligence/feed"),("Ars Technica","https://feeds.arstechnica.com/arstechnica/technology-lab","ai"),("Wired","https://www.wired.com/feed/tag/ai/latest/rss"),("Import AI","https://importai.substack.com/feed"),("Hugging Face","https://huggingface.co/blog/feed.xml"),("OpenAI","https://openai.com/news/rss.xml")],
  "van-hoa": [("VnExpress","https://vnexpress.net/rss/giai-tri.rss"),("Tuổi Trẻ","https://tuoitre.vn/rss/giai-tri.rss"),("Tuổi Trẻ","https://tuoitre.vn/rss/van-hoa.rss"),("Thanh Niên","https://thanhnien.vn/rss/giai-tri.rss"),("Thanh Niên","https://thanhnien.vn/rss/van-hoa.rss"),("VietNamNet","https://vietnamnet.vn/giai-tri.rss"),
    ("Variety","https://variety.com/feed/"),("Rolling Stone","https://www.rollingstone.com/music/feed/"),("Billboard","https://www.billboard.com/feed/"),("The Guardian","https://www.theguardian.com/culture/rss"),("The Guardian","https://www.theguardian.com/film/rss"),("The Guardian","https://www.theguardian.com/books/rss")],
- "bat-dong-san": [("VnExpress","https://vnexpress.net/rss/bat-dong-san.rss"),("CafeF","https://cafef.vn/bat-dong-san.rss")],
+ "bat-dong-san": [("CafeF","https://cafef.vn/bat-dong-san.rss"),("VnExpress","https://vnexpress.net/rss/bat-dong-san.rss"),("VnEconomy","https://vneconomy.vn/dia-oc.rss"),("Vietstock","https://vietstock.vn/4186/bat-dong-san/thi-truong-nha-dat.rss"),("Đầu tư Chứng khoán","https://www.tinnhanhchungkhoan.vn/rss/bat-dong-san-11.rss"),("Tuổi Trẻ","https://tuoitre.vn/rss/nha-dat.rss"),("Thanh Niên","https://thanhnien.vn/rss/kinh-te/dia-oc.rss"),("Báo Xây dựng","https://baoxaydung.vn/rss/bat-dong-san.rss"),("Dân trí","https://dantri.com.vn/rss/bat-dong-san.rss"),("VietNamNet","https://vietnamnet.vn/bat-dong-san.rss")],
 }
 MAXPER=40
+DEEP={"ai","van-hoa","tai-chinh","bat-dong-san"}
 def clean(s):
     s=html.unescape(html.unescape(re.sub(r"<[^>]+>"," ",s or ""))); return re.sub(r"\s+"," ",s).strip()
 def img_of(it, raw):
@@ -28,13 +29,21 @@ class _A:
     def search(self,t): return AICS.search(t) or AIWD.search(t)
 AIRE=_A()
 SUBS={"ai":[("ai-vn",r"Việt Nam|\bVN\b|tại Việt|người Việt|doanh nghiệp Việt|Bộ KH|Hà Nội|TP\.?HCM|Viettel|FPT|VNPT|MISA"),("ai-model",r"\bmodel|mô hình|GPT|Gemini|Claude|Llama|Grok|DeepSeek|Mistral|chatbot|ra mắt|launch|release|phiên bản|app\b|sản phẩm|Copilot|agent"),("ai-research",r"research|nghiên cứu|paper|study|benchmark|scientist|nhà khoa học|alignment|safety|Import AI|arXiv|lab\b"),("ai-biz",r"doanh nghiệp|startup|đầu tư|funding|raise|billion|tỷ|enterprise|business|công ty|thị trường|Nvidia|chip|data ?cent|ứng dụng|y tế|giáo dục|ngân hàng")],
+ "tai-chinh":[("ck-world",r"Phố Wall|Wall Street|S&P|Dow|Nasdaq|Nikkei|chứng khoán (thế giới|Mỹ|châu Á|châu Âu|Trung Quốc|Nhật)|Fed\b|stocks?|futures|global markets|Asian markets|Europe"),("ck-foreign",r"khối ngoại|nhà đầu tư nước ngoài|tự doanh|bán ròng|mua ròng|ETF|foreign investors"),("ck-analysis",r"khuyến nghị|nhận định|phân tích|định giá|giá mục tiêu|triển vọng|chiến lược|góc nhìn|kịch bản|dự báo|nên mua|outlook|analyst"),("ck-corp",r"lợi nhuận|doanh thu|KQKD|kết quả kinh doanh|quý \d|quý [IV]+|cổ tức|ĐHĐCĐ|phát hành|niêm yết|lãi ròng|báo lãi|báo lỗ|thua lỗ|cổ đông|earnings|revenue"),("ck-macro",r"lãi suất|tỷ giá|NHNN|Ngân hàng Nhà nước|lạm phát|CPI|GDP|tín dụng|vĩ mô|chính sách tiền tệ|trái phiếu|USD|nâng hạng|FTSE|MSCI"),("ck-today",r"VN-?Index|phiên|thanh khoản|cổ phiếu|chứng khoán|HoSE|HNX|UPCoM|VN30|tăng điểm|giảm điểm|thị trường")],
+ "bat-dong-san":[("bds-credit",r"lãi suất|vay mua nhà|tín dụng|cho vay|ngân hàng|gói \d+|trái phiếu|dòng tiền"),("bds-policy",r"luật|pháp lý|nghị định|thông tư|quy hoạch|sổ hồng|sổ đỏ|giấy chứng nhận|bảng giá đất|thuế|Quốc hội|Chính phủ|thu hồi đất|đấu giá đất|chính sách"),("bds-infra",r"hạ tầng|cao tốc|metro|đường sắt|sân bay|cầu\b|vành đai|đường cao|cảng|khu công nghiệp|giao thông"),("bds-corp",r"VIC|VHM|Vingroup|Vinhomes|NVL|Novaland|KDH|Khang Điền|DXG|Đất Xanh|NLG|Nam Long|PDR|Phát Đạt|DIG|CEO|KBC|HDG|TCH|lợi nhuận|doanh thu|cổ phiếu|doanh nghiệp bất động sản|chủ đầu tư"),("bds-project",r"dự án|căn hộ|chung cư|khu đô thị|nhà ở xã hội|mở bán|bàn giao|khởi công|condotel|biệt thự"),("bds-market",r"giá|thị trường|nhà đất|đất nền|thanh khoản|giao dịch|nguồn cung|cho thuê|môi giới")],
  "van-hoa":[("vh-music",r"nhạc|ca sĩ|MV\b|album|concert|hòa nhạc|music|song|singer|rapper|Billboard|Grammy|tour\b|K-?pop|ban nhạc|band\b|bài hát"),("vh-film",r"phim|điện ảnh|đạo diễn|diễn viên|film|movie|cinema|box office|doanh thu phòng vé|Oscar|Netflix|series|trailer|liên hoan phim|festival"),("vh-book",r"sách|tiểu thuyết|nhà văn|tác giả|văn học|book|novel|author|poet|thơ|literary"),("vh-star",r"sao\b|showbiz|hoa hậu|người mẫu|scandal|celebrity|kết hôn|ly hôn|hẹn hò|MC\b|Hoa hậu|người đẹp"),("vh-art",r"văn hóa|nghệ thuật|triển lãm|di sản|bảo tàng|sân khấu|kịch|múa|lễ hội|art\b|museum|exhibition|theatre|theater|heritage|painting")]}
 def sub_of(ch,txt,src):
     if ch not in SUBS: return ""
     if ch=="ai" and src in("Import AI","MIT Technology Review") and re.search(SUBS["ai"][2][1],txt,re.I): return "ai-research"
     for k,rx in SUBS[ch]:
         if re.search(r"(?<![\w])(?:"+rx+r")(?![\w])",txt,re.I): return k
-    return "ai-news" if ch=="ai" else "vh-art"
+    return {"ai":"ai-news","van-hoa":"vh-art","tai-chinh":"ck-today","bat-dong-san":"bds-market"}[ch]
+CITY=[("hn",r"Hà Nội|Thủ đô|Hanoi"),("hcm",r"TP\.? ?HCM|TP\.? ?Hồ Chí Minh|Sài Gòn|Thủ Đức|Ho Chi Minh"),("dn",r"Đà Nẵng|Da Nang")]
+try: KT=set(json.load(open("data/market.json"))["tk"])
+except Exception: KT=set()
+KT|=set("VIC VHM VRE NVL KDH DXG NLG PDR DIG CEO KBC HDG TCH FPT HPG SSI VCB TCB MBB ACB VNM MWG".split())
+KT-=set("HCM VND USD CEO GDP CPI ETF IPO".split())
+def tickers(t): return sorted({w for w in re.findall(r"(?<![A-Za-z0-9])([A-Z]{3})(?![A-Za-z0-9])",t) if w in KT})[:6]
 A="{http://www.w3.org/2005/Atom}"
 def iso(s):
     try: return int(datetime.fromisoformat(s.replace("Z","+00:00")).timestamp())
@@ -66,6 +75,11 @@ for ch, feeds in FEEDS.items():
                 items.append(dict(title=t,summary=s,image=img_of(it,desc),source=src,link=link,time=ts,channel=ch))
                 sb=sub_of(ch,t+" "+s,src)
                 if sb: items[-1]["sub"]=sb
+                if ch in("tai-chinh","bat-dong-san"):
+                    tk=tickers(t+" "+s)
+                    if tk: items[-1]["tk"]=tk
+                if ch=="bat-dong-san":
+                    cy=next((k for k,rx in CITY if re.search(rx,t+" "+s)),"other"); items[-1]["city"]=cy
                 n+=1
                 if n>=MAXPER: break
             ok.append([src,url,n])
@@ -83,13 +97,13 @@ _c={}
 _o=[]
 for x in out:
     k2=(x["channel"],x["source"])
-    if x["channel"] in("ai","van-hoa"):
+    if x["channel"] in DEEP:
         _c[k2]=_c.get(k2,0)+1
         if _c[k2]>15: continue
     _c[x["channel"]]=_c.get(x["channel"],0)+1
     if _c[x["channel"]]<=PERCH: _o.append(x)
 out=_o
-TOPN=12; DEEP={"ai","van-hoa"}; DEEPN=20
+TOPN=12; DEEPN=20
 ART="cache/articles";os.makedirs(ART,exist_ok=True);os.makedirs("data",exist_ok=True)
 for x in out: x["id"]=hashlib.sha1(x["link"].encode()).hexdigest()[:12]
 want=[]
@@ -126,7 +140,7 @@ for x in out:
     if x.get("full"):
         try:
             w=json.load(open(f"{ART}/{x['id']}.json")).get("words",0)
-            if w: x["rt"]=max(1,round(w/(230 if x["source"] not in("VnExpress","Tuổi Trẻ","Thanh Niên","VietNamNet","CafeF","VnEconomy") else 300)))
+            if w: x["rt"]=max(1,round(w/(230 if x["source"] not in("VnExpress","Tuổi Trẻ","Thanh Niên","VietNamNet","CafeF","VnEconomy","Vietstock","Đầu tư Chứng khoán","Dân trí","Báo Xây dựng") else 300)))
         except Exception: pass
 print("articles:",sum(res),"/",len(want))
 json.dump(dict(updated=int(now),sources_ok=ok,sources_failed=bad,items=out),open("data/news.json","w"),ensure_ascii=False)

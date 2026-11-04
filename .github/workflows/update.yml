@@ -20,6 +20,7 @@ jobs:
           path: cache
           key: bst-cache-${{ github.run_id }}
           restore-keys: bst-cache-
+      - run: python scripts/market.py || echo 'market data failed'
       - run: python scripts/fetch.py
       - run: python scripts/enrich.py
       - run: mkdir -p _site && cp -r index.html manifest.webmanifest sw.js icons data .nojekyll _site/ && du -sh _site _site/data/audio
