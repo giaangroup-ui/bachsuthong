@@ -10,7 +10,7 @@ FEEDS = {
 }
 MAXPER=40
 def clean(s):
-    s=html.unescape(re.sub(r"<[^>]+>"," ",s or "")); return re.sub(r"\s+"," ",s).strip()
+    s=html.unescape(html.unescape(re.sub(r"<[^>]+>"," ",s or ""))); return re.sub(r"\s+"," ",s).strip()
 def img_of(it, raw):
     for el in it:
         t=el.tag.split('}')[-1]
