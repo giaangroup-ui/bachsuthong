@@ -130,13 +130,13 @@ const PH="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org
 let D=null,ch=+(localStorage.bstCh||0),idx=0,play=true,timer=null,t0=0;const DUR=8000,TVN=12;
 function ago(ts){const t=L_(),m=Math.max(0,(Date.now()/1000-ts)/60|0);return m<1?t.now:m<60?t.min(m):m<1440?t.hr(m/60|0):new Date(ts*1000).toLocaleDateString(t.loc,{timeZone:TZ})}
 let MIX=null;function mix(L){const g={};L.forEach(x=>(g[x.source]=g[x.source]||[]).push(x));const q=Object.values(g),o=[];let i=0;while(o.length<L.length){q.forEach(a=>{if(a[i])o.push(a[i])});i++}return o}
-const SUBS={"tai-chinh":["ck-today","ck-corp","ck-analysis","ck-foreign","ck-macro","ck-world"],"bat-dong-san":["bds-market","bds-project","bds-policy","bds-credit","bds-corp","bds-infra"],"ai":["ai-news","ai-model","ai-vn","ai-research","ai-biz"],"van-hoa":["vh-music","vh-film","vh-star","vh-art","vh-book"]};let SUB="",CITY="",TKF="",MK=null,WLS=JSON.parse(localStorage.bstWl||"[]");const FIN={"tai-chinh":1,"bat-dong-san":1};
+const SUBS={"tai-chinh":["ck-today","ck-corp","ck-analysis","ck-foreign","ck-macro","ck-world"],"bat-dong-san":["bds-market","bds-project","bds-policy","bds-credit","bds-corp","bds-infra"],"ai":["ai-news","ai-model","ai-vn","ai-research","ai-biz"],"van-hoa":["vh-music","vh-film","vh-star","vh-art","vh-book"]};let QF=null,SUB="",CITY="",TKF="",MK=null,WLS=JSON.parse(localStorage.bstWl||"[]");const FIN={"tai-chinh":1,"bat-dong-san":1};
 const LONGF=new Set(["MIT Technology Review","Wired","Import AI","The Verge","The Guardian","Rolling Stone","Ars Technica"]);
 function bdg(x){if(!x.rt)return"";const d=x.rt>=5||(LONGF.has(x.source)&&x.rt>=3);return (d?` <span class="deep">${L_().deep}</span>`:"")+` <span class="rtm">⏱ ${L_().rtm(x.rt)}</span>`}
-function subbar(){const c=CH[ch][0],S=SUBS[c],e=$("subs");if(!S){e.hidden=true;e.innerHTML="";return}e.hidden=false;
+function subbar(){const c=CH[ch][0],S=SUBS[c],e=$("subs");if(!S&&QF){e.hidden=false;e.innerHTML=`<button class="on" data-x="1">${esc(L_().newsof(QF.join(" ")))} ✕</button>`;e.querySelector("button").onclick=()=>{QF=null;idx=0;subbar();render()};return}if(!S){e.hidden=true;e.innerHTML="";return}e.hidden=false;
  e.innerHTML=[""].concat(S).map(k=>`<button class="${k==SUB?"on":""}" data-s="${k}">${k?L_().subs[k]:L_().allsub}</button>`).join("");if(c=="bat-dong-san")e.innerHTML+='<span class="sep"></span>'+["","hn","hcm","dn","other"].map(k=>`<button class="cy ${k==CITY?"on":""}" data-c="${k}">${k?L_().city[k]:L_().allcity}</button>`).join("");
- if(TKF)e.innerHTML+=`<span class="sep"></span><button class="on" data-x="1">${esc(L_().newsof(TKF))} ✕</button>`;
- e.querySelectorAll("button").forEach(b=>b.onclick=()=>{if(b.dataset.x){TKF=""}else if(b.dataset.c!=null){CITY=b.dataset.c}else{SUB=b.dataset.s;TKF=""}idx=0;subbar();render()})}
+ if(TKF||QF)e.innerHTML+=`<span class="sep"></span><button class="on" data-x="1">${esc(L_().newsof(TKF||QF.join(" ")))} ✕</button>`;
+ e.querySelectorAll("button").forEach(b=>b.onclick=()=>{if(b.dataset.x){TKF="";QF=null}else if(b.dataset.c!=null){CITY=b.dataset.c}else{SUB=b.dataset.s;TKF=""}idx=0;subbar();render()})}
 function spark(a,up){if(!a||a.length<2)return"";const mn=Math.min(...a),mx=Math.max(...a),w=80,h=24,p=a.map((v,i)=>(i/(a.length-1)*w).toFixed(1)+","+(h-(mx>mn?(v-mn)/(mx-mn)*h:h/2)).toFixed(1)).join(" ");return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}"><polyline fill="none" stroke="${up?"#22c55e":"#ef4444"}" stroke-width="1.6" points="${p}"/></svg>`}
 function nf(v,d){return (+v).toLocaleString(L_().loc,{maximumFractionDigits:d,minimumFractionDigits:d})}
 function card(n,v,prev,sp,d,sub){const c=v-prev,pc=prev?c/prev*100:0,up=c>=0;return `<div class="mc"><div class="mn">${esc(n)}</div><div class="mv">${nf(v,d)}</div><div class="${up?"up":"dn"}">${up?"▲":"▼"} ${nf(Math.abs(c),d)} (${up?"+":"-"}${nf(Math.abs(pc),2)}%)</div>${spark(sp,up)}${sub?`<div class="meta">${sub}</div>`:""}</div>`}
@@ -157,13 +157,13 @@ function overview(){const c=CH[ch][0],e=$("ovs");if(!SUBS[c]||!D){e.hidden=true;
  const cnt={};U.forEach(x=>cnt[x.sub]=(cnt[x.sub]||0)+1);const top=mix(U).sort((a,b)=>(b.rt||0)-(a.rt||0)).slice(0,6);
  e.innerHTML=`<h3>🧭 ${t.ov} – ${t.ch[ch]}</h3><div class="meta">${t.ovn(U.length,new Set(U.map(x=>x.source)).size)}</div><div class="kw">${SUBS[c].map(k=>`<span class="sb" data-s="${k}">${t.subs[k]} <b style="color:var(--y)">${cnt[k]||0}</b></span>`).join("")}</div><div class="kw">${kwOf(U).map(([k,n])=>`<span>#${esc(k)} <b style="color:var(--y)">${n}</b></span>`).join("")}</div>${FIN[c]?`<h4>${t.tkn}</h4><div class="kw">${Object.entries(U.reduce((m,x)=>((x.tk||[]).forEach(k=>m[k]=(m[k]||0)+1),m),{})).sort((a,b)=>b[1]-a[1]).slice(0,12).map(([k,n])=>`<span class="tkc" data-k="${k}">${k} <b style="color:var(--y)">${n}</b></span>`).join("")||"–"}</div>`:""}<h4>${t.top}</h4><ul>${top.map(x=>`<li><a href="#tin/${x.id}" data-id="${x.id}">${esc(x.title)}</a> <span class="meta">(${esc(x.source)})</span>${bdg(x)}</li>`).join("")}</ul>`;
  e.querySelectorAll(".sb").forEach(b=>b.onclick=()=>{SUB=b.dataset.s;idx=0;subbar();render()});e.querySelectorAll(".tkc").forEach(b=>b.onclick=()=>{TKF=b.dataset.k;idx=0;subbar();render()});if(FIN[c])e.innerHTML+=`<div class="disc">${t.disc}</div>`}
-function items(){if(!D)return[];const c=CH[ch][0];let L=c==="all"?D.items:D.items.filter(x=>x.channel===c);if(SUB&&SUBS[c])L=L.filter(x=>x.sub==SUB);if(CITY&&c=="bat-dong-san")L=L.filter(x=>x.city==CITY);if(TKF){const re=new RegExp("(^|[^A-Z0-9])"+TKF+"([^A-Z0-9]|$)");L=D.items.filter(x=>(x.tk||[]).includes(TKF)||re.test(x.title+" "+x.summary))}return mix(L)}
+function items(){if(!D)return[];const c=CH[ch][0];let L=c==="all"?D.items:D.items.filter(x=>x.channel===c);if(SUB&&SUBS[c])L=L.filter(x=>x.sub==SUB);if(CITY&&c=="bat-dong-san")L=L.filter(x=>x.city==CITY);if(TKF){const re=new RegExp("(^|[^A-Z0-9])"+TKF+"([^A-Z0-9]|$)");L=D.items.filter(x=>(x.tk||[]).includes(TKF)||re.test(x.title+" "+x.summary))}if(QF){const n=s=>(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d");L=D.items.filter(x=>{const t=n(x.title+" "+x.summary);return QF.every(w=>t.includes(w))});const A=L.filter(x=>(AUD[x.id]||{})[MC]);return mix(A).concat(mix(L.filter(x=>!(AUD[x.id]||{})[MC])))}return mix(L)}
 function img(x){return x.image||PH}
 function tick(){const n=new Date();$("ltck").textContent=n.toLocaleTimeString(L_().loc,{timeZone:TZ,hour:"2-digit",minute:"2-digit"});$("ck").textContent=n.toLocaleTimeString(L_().loc,{timeZone:TZ,hour:"2-digit",minute:"2-digit",second:"2-digit"});$("dt").textContent=n.toLocaleDateString(L_().loc,{timeZone:TZ,weekday:"long",day:"2-digit",month:"2-digit",year:"numeric"});
  if(play&&t0&&!tvOn){const p=Math.min(1,(Date.now()-t0)/DUR);$("prog").style.width=p*100+"%";if(p>=1)go(idx+1)}}
 function nav(){$("nav").innerHTML=CH.map((c,i)=>`<button class="${i==ch?"on":""}" data-i="${i}"><span class="n">${String(i).padStart(2,"0")}</span>${L_().ch[i]}</button>`).join("");
  $("nav").querySelectorAll("button").forEach(b=>b.onclick=()=>setCh(+b.dataset.i));subbar();const on=$("nav").querySelector(".on"),nv=$("nav");if(on)nv.scrollLeft=on.offsetLeft-(nv.clientWidth-on.offsetWidth)/2}
-function setCh(i){ch=(i+CH.length)%CH.length;localStorage.bstCh=ch;idx=0;SUB="";CITY="";TKF="";nav();render()}
+function setCh(i){ch=(i+CH.length)%CH.length;localStorage.bstCh=ch;idx=0;SUB="";CITY="";TKF="";QF=null;nav();render()}
 function go(i){if(tvOn&&!document.hidden&&window.AU_PENDING&&AU_PENDING()){stopSpeak();const L0=items().slice(0,TVN);if(L0.length)idx=(i+L0.length)%L0.length;if(AU_TRY())return}const L=items().slice(0,TVN);if(!L.length)return;idx=(i+L.length)%L.length;const x=L[idx];
  $("hero").dataset.id=x.id;const im=$("himg");im.style.opacity=0;setTimeout(()=>{if(RADIO)return;im.src=img(x);im.onerror=()=>im.src=PH;im.className="kb"+(Math.random()*4|0);im.style.opacity=1},150);$("ltch").textContent=L_().ch[CH.findIndex(c=>c[0]==x.channel)];
  $("hsrc").innerHTML=esc(x.source+" · "+L_().ch[CH.findIndex(c=>c[0]==x.channel)])+trl(x.link);$("htime").innerHTML=esc(ago(x.time))+bdg(x);$("htt").textContent=x.title;$("hsum").textContent=x.summary;
@@ -271,7 +271,110 @@ $("inst").onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$("in
 addEventListener("appinstalled",()=>$("inst").style.display="none");
 window.AU_LANG=()=>LG;window.AU_STATE=()=>tvOn&&play?"busy":"idle";
 window.AU_BEFORE=()=>{sessionStorage.bstResume=tvOn&&play?"1":"";sessionStorage.bstCur=(cur()||{}).id||""};
-</script><script>/* Tự động cập nhật phiên bản mới (version.json) */
+</script>
+<style>
+#piov{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,#0a0e1ecc,#000d);backdrop-filter:blur(3px);padding:12px;animation:pifade .35s ease}
+#piov[hidden]{display:none}
+@keyframes pifade{from{opacity:0}to{opacity:1}}
+.picard{display:flex;gap:14px;align-items:flex-end;max-width:min(760px,96vw);width:100%}
+.pibody{flex:0 0 auto;width:clamp(96px,18vw,150px);animation:pibounce 1.6s ease-in-out infinite;transform-origin:50% 100%;cursor:pointer}
+@keyframes pibounce{0%,100%{transform:translateY(0) scale(1,1)}45%{transform:translateY(-10px) scale(.97,1.03)}55%{transform:translateY(-10px)}90%{transform:translateY(0) scale(1.04,.96)}}
+.pibody .eye{animation:piblink 4s infinite;transform-origin:center;transform-box:fill-box}
+@keyframes piblink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.pibody .arm{animation:piwave 1.2s ease-in-out infinite;transform-origin:8% 90%;transform-box:fill-box}
+@keyframes piwave{0%,100%{transform:rotate(0)}50%{transform:rotate(-28deg)}}
+.pibody .leaf{animation:pisway 2.4s ease-in-out infinite;transform-origin:50% 100%;transform-box:fill-box}
+@keyframes pisway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+.pitalk .pibody .mouth{animation:pitalkm .25s infinite alternate;transform-origin:center;transform-box:fill-box}
+@keyframes pitalkm{from{transform:scaleY(.6)}to{transform:scaleY(1.4)}}
+.pibub{flex:1;min-width:0;background:var(--p);border:2px solid var(--y);border-radius:18px 18px 18px 4px;padding:14px 16px;color:var(--t);box-shadow:0 10px 40px #000a;position:relative}
+.pibub h4{margin:0 0 4px;color:var(--y);font-size:15px;display:flex;align-items:center;gap:8px}
+.pibub .msg{font-size:clamp(15px,2.2vw,19px);line-height:1.45;margin:0 0 10px;min-height:2.9em}
+.pichips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;max-height:34vh;overflow:auto}
+.pichips button{background:var(--p2);color:var(--t);border:1px solid #fff2;border-radius:999px;padding:7px 12px;font-size:14px;cursor:pointer}
+.pichips button:hover,.pichips button:focus{background:var(--y);color:#000;outline:0}
+.piform{display:flex;gap:6px}
+.piform input{flex:1;min-width:0;background:#0007;border:1px solid #fff3;color:var(--t);border-radius:999px;padding:9px 14px;font-size:15px}
+.piform button{background:var(--y);color:#000;border:0;border-radius:999px;padding:0 14px;font-weight:700;cursor:pointer;font-size:16px}
+.piform button.mic.on{background:var(--red);color:#fff;animation:pifade .6s infinite alternate}
+.pix{position:absolute;top:6px;right:8px;background:none;border:0;color:var(--m);font-size:18px;cursor:pointer}
+.pisnd{background:none;border:1px solid #fff3;color:var(--t);border-radius:999px;font-size:12px;padding:2px 8px;cursor:pointer}
+#pifab{position:fixed;left:12px;bottom:52px;z-index:41;width:58px;height:62px;border:0;background:none;padding:0;cursor:pointer;filter:drop-shadow(0 4px 10px #000a);animation:pibounce 2.2s ease-in-out infinite;transform-origin:50% 100%}
+#pifab[hidden]{display:none}
+#pitip{position:fixed;left:74px;bottom:70px;z-index:41;background:var(--y);color:#000;font-weight:700;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:13px;max-width:60vw;box-shadow:0 4px 14px #0008;animation:pifade .3s}
+#pitip[hidden]{display:none}
+@media (max-width:560px){.picard{flex-direction:column;align-items:center}.pibub{border-radius:18px}}
+</style>
+<div id="piov" hidden role="dialog" aria-label="Pi"><div class="picard"><div class="pibody" id="pibody"></div><div class="pibub"><button class="pix" id="pix" aria-label="close">✕</button><h4>🧅 Pi <button class="pisnd" id="pisnd">🔊</button></h4><p class="msg" id="pimsg"></p><div class="pichips" id="pichips"></div><form class="piform" id="piform"><input id="piin" autocomplete="off"><button type="button" class="mic" id="pimic">🎤</button><button id="pigo">➜</button></form></div></div></div>
+<button id="pifab" hidden aria-label="Pi"></button><div id="pitip" hidden></div>
+<script>/* Trợ lý Pi củ hành: chào khi mở app, hỏi kênh/chủ đề, mở kênh & cho MC đọc */
+(()=>{
+const SVG=`<svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="pig" cx="40%" cy="40%" r="70%"><stop offset="0" stop-color="#fbe3f1"/><stop offset=".55" stop-color="#e9a6cf"/><stop offset="1" stop-color="#b85c9b"/></radialGradient></defs>
+<g class="leaf"><path d="M60 30C52 14 54 4 58 0c3 8 4 18 4 30z" fill="#4caf50"/><path d="M62 30c2-14 10-22 16-24-4 8-8 18-12 26z" fill="#66bb6a"/></g>
+<path d="M60 26C30 40 14 62 18 88c4 24 22 36 42 36s38-12 42-36C106 62 90 40 60 26z" fill="url(#pig)" stroke="#9c4d86" stroke-width="2"/>
+<path d="M60 30C48 50 44 80 52 120M60 30c12 20 16 50 8 90M60 30C40 46 30 70 34 112M60 30c20 16 30 40 26 82" fill="none" stroke="#c77bb0" stroke-width="1.4" opacity=".7"/>
+<g class="arm"><path d="M98 82c10-4 16-14 16-22" stroke="#9c4d86" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="114" cy="58" r="5" fill="#e9a6cf" stroke="#9c4d86" stroke-width="2"/></g>
+<path d="M22 86c-8 2-12 8-12 14" stroke="#9c4d86" stroke-width="5" stroke-linecap="round" fill="none"/>
+<ellipse class="eye" cx="46" cy="78" rx="5" ry="7" fill="#2b1b2a"/><ellipse class="eye" cx="74" cy="78" rx="5" ry="7" fill="#2b1b2a"/><circle cx="48" cy="75" r="1.8" fill="#fff"/><circle cx="76" cy="75" r="1.8" fill="#fff"/>
+<ellipse cx="36" cy="92" rx="6" ry="3.5" fill="#ff6f91" opacity=".6"/><ellipse cx="84" cy="92" rx="6" ry="3.5" fill="#ff6f91" opacity=".6"/>
+<path class="mouth" d="M52 92q8 9 16 0q-8 4-16 0z" fill="#8a1c45" stroke="#2b1b2a" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M50 124l-3 5M60 125v5M70 124l3 5" stroke="#d7c49e" stroke-width="2" stroke-linecap="round"/></svg>`;
+$("pibody").innerHTML=SVG;$("pifab").innerHTML=SVG;
+const UI={vi:{ph:"Gõ kênh hoặc chủ đề, VD: giá vàng, AI…",tip:"Gọi Pi nè!",nomic:"Thiết bị chưa hỗ trợ nói – bạn gõ giúp Pi nhé!",listen:"Pi đang nghe…",okc:n=>`Pi mở kênh ${n} cho bạn đây, MC đọc ngay nhé!`,okq:q=>`Pi tìm được tin về “${q}” rồi, MC đọc ngay nhé!`,no:"Ui, Pi chưa tìm thấy tin đó. Bạn chọn thử một kênh nhé!",sr:"vi-VN"},
+ en:{ph:"Type a channel or topic, e.g. gold price, AI…",tip:"Call Pi!",nomic:"Voice input isn't supported here – please type!",listen:"Pi is listening…",okc:n=>`Pi is opening ${n} for you – the anchor starts reading now!`,okq:q=>`Pi found stories about “${q}” – the anchor starts reading now!`,no:"Oops, Pi couldn't find that. Try picking a channel!",sr:"en-US"},
+ zh:{ph:"输入频道或话题，如：金价、AI…",tip:"叫Pi！",nomic:"此设备不支持语音输入 – 请打字告诉Pi！",listen:"Pi在听…",okc:n=>`Pi为你打开「${n}」，主播马上播报！`,okq:q=>`Pi找到了“${q}”相关新闻，主播马上播报！`,no:"哎呀，Pi没找到相关新闻。试试选一个频道吧！",sr:"zh-CN"}};
+const u=()=>UI[LG]||UI.vi;
+const nm=s=>(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim();
+/* từ khóa theo kênh (đã bỏ dấu), cộng thêm tên kênh ở cả 3 ngôn ngữ */
+const KW={"the-gioi":["the gioi","quoc te","kinh te the gioi","world","global","international","世界","国际"],"thoi-su":["thoi su","trong nuoc","tin nong","xa hoi","news","domestic","时事","国内"],"kinh-te-vn":["kinh te","kinh te viet nam","doanh nghiep","economy","vietnam economy","经济"],"tai-chinh":["chung khoan","co phieu","tai chinh","ngan hang","vnindex","vn index","stock","stocks","finance","market","股","股市","金融","证券"],"bat-dong-san":["bat dong san","bds","nha dat","can ho","chung cu","du an","real estate","property","housing","apartment","房地产","房","楼市"],"ai":["ai","tri tue nhan tao","chatgpt","openai","robot","cong nghe","artificial intelligence","tech","人工智能","智能","科技"],"van-hoa":["van hoa","giai tri","am nhac","phim","ca si","showbiz","nghe thuat","sach","culture","entertainment","music","movie","film","celebrity","文化","娱乐","音乐","电影","明星"],"all":["tat ca","tong hop","moi kenh","all","everything","全部"]};
+CH.forEach((c,i)=>{KW[c[0]]=(KW[c[0]]||[]).concat(["vi","en","zh"].map(l=>nm(I18N[l].ch[i])))});
+const STW=new Set(nm("xem nghe mo kenh tin tuc ve cho toi minh muon biet chuyen gi doc pi oi nhe nha di voi cua hom nay please open show me the news about channel i want to watch listen 看 打开 频道 新闻 我想 关于 的").split(" "));
+function parse(q){const n=" "+nm(q)+" ";if(!n.trim())return null;let best=null,bl=0,bk="";
+ for(const[c,ks]of Object.entries(KW))for(const k of ks){if(!k)continue;const hit=/^[\x00-\x7f]+$/.test(k)?n.includes(" "+k+" "):n.includes(k);if(hit&&k.length>bl){best=c;bl=k.length;bk=k}}
+ for(const[c,S]of Object.entries(SUBS))for(const s of S)for(const l of["vi","en","zh"]){const k=nm(I18N[l].subs[s]);if(k.length>3&&n.includes(k)&&k.length>=bl)return{ch:c,sub:s}}
+ const rest=n.trim().split(" ").filter(w=>w&&!STW.has(w)).join(" ");
+ if(best&&(!rest||rest==bk||rest.length<=bl+1))return{ch:best};
+ if(rest&&D){const ws=rest.split(" ").filter(w=>w.length>1||/[^\x00-\x7f]/.test(w));const H=D.items.filter(x=>{const t=nm(x.title+" "+x.summary);return ws.every(w=>t.includes(w))});if(H.length)return{q:rest,raw:q.trim()}}
+ return best?{ch:best}:null}
+let PA=new Audio(),TX=null,first=true;PA.preload="auto";
+const slot=()=>{const h=+new Date().toLocaleString("en-US",{timeZone:TZ,hour:"numeric",hour12:false})%24;return h<11?"morning":h<14?"noon":h<18?"afternoon":"evening"};
+function say(key,fallback){const t=(TX&&TX[LG]&&TX[LG][key])||fallback||"";$("pimsg").textContent=t;PA.pause();
+ if(!TX||!TX[LG]||!TX[LG][key]||muted||!vol)return Promise.resolve();
+ PA.src="pi/"+key+"."+LG+".mp3";PA.volume=vol;$("piov").classList.add("pitalk");PA.onended=PA.onerror=()=>$("piov").classList.remove("pitalk");
+ return PA.play().catch(()=>$("piov").classList.remove("pitalk"))}
+function chips(){$("pichips").innerHTML=CH.map((c,i)=>`<button type="button" data-i="${i}">${esc(L_().ch[i])}</button>`).join("");
+ $("pichips").querySelectorAll("button").forEach(b=>b.onclick=()=>act({ch:CH[+b.dataset.i][0]}))}
+let gk="";function show(){stopMic();$("pifab").hidden=true;$("pitip").hidden=true;chips();$("piin").placeholder=u().ph;$("piov").hidden=false;
+ gk="g-"+slot()+"-"+(Math.random()*2|0);say(gk,"");setTimeout(()=>{try{$("piin").focus({preventScroll:true})}catch(e){}},50)}
+function hide(){PA.pause();$("piov").classList.remove("pitalk");$("piov").hidden=true;$("pifab").hidden=false;stopMic()}
+function tip(t){const e=$("pitip");e.textContent=t;e.hidden=false;clearTimeout(tip.t);tip.t=setTimeout(()=>e.hidden=true,5000)}
+function act(r){if(!r||!D){$("pimsg").textContent=u().no;say("no",u().no);return}
+ PA.pause();let msg;
+ if(r.q){const ws=r.q.split(" ");setCh(0);QF=ws;subbar();render();msg=u().okq(r.raw)}
+ else{const i=CH.findIndex(c=>c[0]==r.ch);setCh(i<0?0:i);if(r.sub){SUB=r.sub;subbar();render()}msg=u().okc(L_().ch[ch]+(r.sub?" – "+L_().subs[r.sub]:""))}
+ $("pimsg").textContent=msg;idx=0;RADIO=false;document.body.classList.remove("radio");startTv();
+ setTimeout(()=>{hide();tip(msg)},900)}
+$("piform").onsubmit=e=>{e.preventDefault();const v=$("piin").value;$("piin").value="";act(parse(v))};
+$("pix").onclick=hide;$("pifab").onclick=()=>{if(tvOn&&play){$("pp").click()}show()};$("pisnd").onclick=()=>say(gk,$("pimsg").textContent);
+$("piov").addEventListener("click",e=>{if(e.target.id=="piov")hide()});
+addEventListener("keydown",e=>{if(!$("piov").hidden){e.stopImmediatePropagation();if(e.key=="Escape")hide()}},true);
+/* nhận giọng nói */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null;
+function stopMic(){if(rec){try{rec.abort()}catch(e){}rec=null}$("pimic").classList.remove("on")}
+$("pimic").onclick=()=>{if(rec){stopMic();return}if(!SR){$("pimsg").textContent=u().nomic;$("piin").focus();return}
+ try{PA.pause();rec=new SR();rec.lang=u().sr;rec.interimResults=true;rec.maxAlternatives=1;$("pimic").classList.add("on");$("pimsg").textContent=u().listen;
+ rec.onresult=e=>{const r=e.results[e.results.length-1];$("piin").value=r[0].transcript;if(r.isFinal){const v=r[0].transcript;stopMic();$("piin").value="";act(parse(v))}};
+ rec.onerror=ev=>{stopMic();$("pimsg").textContent=ev.error=="not-allowed"||ev.error=="service-not-allowed"?u().nomic:u().ph};rec.onend=()=>{rec=null;$("pimic").classList.remove("on")};rec.start()}catch(e){stopMic();$("pimsg").textContent=u().nomic}};
+/* đổi ngôn ngữ -> cập nhật Pi */
+document.querySelectorAll("#lang button").forEach(b=>b.addEventListener("click",()=>{if(!$("piov").hidden)setTimeout(show,0)}));
+fetch("pi/text.json").then(r=>r.ok?r.json():null).then(j=>{TX=j;if(!$("piov").hidden&&gk)say(gk)}).catch(()=>{});
+/* chạm lần đầu -> phát lời chào (luật autoplay) */
+$("piov").addEventListener("pointerdown",()=>{if(first&&PA.paused&&gk){first=false;if(!$("pimsg").dataset.played)say(gk)}},{once:true});
+PA.onplay=()=>{$("pimsg").dataset.played=1};
+window.PI_SHOW=show;
+if(!sessionStorage.bstResume&&!/^#tin\//.test(location.hash))show();else $("pifab").hidden=false;
+})();</script>
+<script>/* Tự động cập nhật phiên bản mới (version.json) */
 (()=>{const CUR=(document.querySelector('meta[name="app-version"]')||{}).content||"dev";window.APP_VERSION=CUR;
 const T={vi:["Có bản mới","Cập nhật"],en:["New version available","Update"],zh:["有新版本","更新"]};
 try{const u=new URL(location.href);if(u.searchParams.has("v")){u.searchParams.delete("v");history.replaceState(history.state,"",u.pathname+u.search+u.hash)}}catch(e){}

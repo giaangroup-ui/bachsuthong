@@ -1,0 +1,35 @@
+{
+ "vi": {
+  "g-morning-0": "Chào buổi sáng bạn ơi! Hôm nay trời đẹp, trông bạn hồng hào tươi tắn quá! Bạn muốn xem kênh nào, muốn biết chuyện gì, Pi mở cho bạn nhé?",
+  "g-morning-1": "Xin chào, sáng nay bạn rạng rỡ ghê! Pha ly cà phê rồi nghe tin cùng Pi nha. Bạn thích kênh nào, Pi mở ngay!",
+  "g-noon-0": "Chào bạn! Trưa nay nắng đẹp, da dẻ bạn hồng hào quá! Nghỉ trưa xem tin chút nhé, bạn muốn biết chuyện gì, Pi mở cho bạn nào?",
+  "g-noon-1": "Pi chào bạn! Giờ nghỉ trưa thư giãn với tin nóng nhé. Bạn muốn xem kênh nào, cứ nói Pi nghe!",
+  "g-afternoon-0": "Chào bạn, buổi chiều vui vẻ! Trông bạn vẫn tươi tắn quá! Bạn muốn xem kênh nào, muốn biết chuyện gì, Pi mở cho bạn nhé?",
+  "g-afternoon-1": "Xin chào! Chiều nay có nhiều tin hay lắm đó. Bạn quan tâm chứng khoán, bất động sản hay AI? Pi mở liền cho bạn!",
+  "g-evening-0": "Chào buổi tối bạn ơi! Tối nay trông bạn thật rạng rỡ! Bạn muốn xem kênh nào, muốn biết chuyện gì, Pi mở cho bạn nhé?",
+  "g-evening-1": "Pi chào bạn! Cuối ngày rồi, cùng điểm lại tin hôm nay nha. Bạn thích nghe kênh nào, Pi mở ngay!",
+  "no": "Ui, Pi chưa tìm thấy tin đó. Bạn chọn thử một kênh nhé!"
+ },
+ "en": {
+  "g-morning-0": "Good morning! What a lovely day, and you look so fresh and glowing! Which channel would you like, or what do you want to know? Pi will open it for you!",
+  "g-morning-1": "Hello there, you look radiant this morning! Grab a coffee and catch up with Pi. Pick a channel and I'll open it right away!",
+  "g-noon-0": "Hi there! Beautiful sunny noon, and you look wonderful! Fancy some news over lunch? Tell Pi what you'd like to know!",
+  "g-noon-1": "Pi says hello! Lunch break is perfect for the headlines. Which channel shall I open for you?",
+  "g-afternoon-0": "Good afternoon! You're still looking so fresh! Which channel would you like, or what do you want to know? Pi will open it for you!",
+  "g-afternoon-1": "Hello! Lots of great stories this afternoon. Stocks, real estate, or AI? Pi will open it right now!",
+  "g-evening-0": "Good evening! You look lovely tonight! Which channel would you like, or what do you want to know? Pi will open it for you!",
+  "g-evening-1": "Pi says hi! The day's almost done, let's catch up on today's news. Which channel shall I open?",
+  "no": "Oops, Pi couldn't find that. Try picking a channel!"
+ },
+ "zh": {
+  "g-morning-0": "早上好！今天天气真好，你看起来气色红润、精神饱满！想看哪个频道，想了解什么？Pi帮你打开吧！",
+  "g-morning-1": "你好呀，今天早上真有精神！泡杯咖啡，和Pi一起看新闻吧。选个频道，Pi马上打开！",
+  "g-noon-0": "中午好！阳光明媚，你的气色真好！午休时看看新闻吧，想了解什么，告诉Pi！",
+  "g-noon-1": "Pi向你问好！午休正适合看热点新闻。想看哪个频道呢？",
+  "g-afternoon-0": "下午好！你看起来依然神采奕奕！想看哪个频道，想了解什么？Pi帮你打开吧！",
+  "g-afternoon-1": "你好！今天下午有很多精彩新闻哦。股市、房地产还是人工智能？Pi马上为你打开！",
+  "g-evening-0": "晚上好！今晚你看起来真精神！想看哪个频道，想了解什么？Pi帮你打开吧！",
+  "g-evening-1": "Pi向你问好！一天快结束了，一起回顾今天的新闻吧。想听哪个频道？",
+  "no": "哎呀，Pi没找到相关新闻。试试选一个频道吧！"
+ }
+}
