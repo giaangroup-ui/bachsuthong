@@ -65,24 +65,24 @@ main{max-width:1400px;margin:0 auto;padding:14px 16px 90px}
 @media(max-width:900px){.stage{grid-template-columns:1fr}.side{max-height:none}}
 @media(max-width:560px){.logo span{display:none}.clock .t{font-size:18px}header{padding:8px 12px}nav{top:54px;padding:8px 12px}main{padding:10px 10px 90px}.hero{aspect-ratio:4/3}.hero .ov{padding:14px}.hero p{display:none}#htime{display:none}.badge{font-size:11px}.grid{grid-template-columns:1fr 1fr;gap:8px}.card .tt{font-size:13px}.card p{display:none}}
 </style></head><body>
-<header><div class="logo"><b>BST</b><span>Bách Sự Thông</span><i class="live" data-i="live"></i></div><div class="lang" id="lang"><button data-l="vi">VI</button><button data-l="en">EN</button><button data-l="zh">中</button></div>
+<header><div class="logo"><b>BST</b><span>Bách Sự Thông</span><i class="live" data-t="live"></i></div><div class="lang" id="lang"><button data-l="vi">VI</button><button data-l="en">EN</button><button data-l="zh">中</button></div>
 <div class="clock"><div class="t" id="ck">--:--</div><div class="d" id="dt"></div><div class="upd" id="upd"></div></div></header>
 <nav id="nav"></nav>
 <main>
 <div class="stage">
- <a class="hero" id="hero" target="_blank" rel="noopener"><img id="himg" alt=""><div class="ov"><div class="badge"><span class="on" data-i="onair"></span><span class="src" id="hsrc"></span><span id="htime" style="color:#ccd"></span></div><h1 id="htt"></h1><p id="hsum"></p></div><div class="prog" id="prog"></div></a>
+ <a class="hero" id="hero" target="_blank" rel="noopener"><img id="himg" alt=""><div class="ov"><div class="badge"><span class="on" data-t="onair"></span><span class="src" id="hsrc"></span><span id="htime" style="color:#ccd"></span></div><h1 id="htt"></h1><p id="hsum"></p></div><div class="prog" id="prog"></div></a>
  <div class="side"><h3 id="sidet"></h3><div id="list"></div></div>
 </div>
-<section class="sec" id="dgs"><h3>📋 <span data-i="digest"></span></h3><div class="kw" id="kw"></div><div class="digest" id="digest"></div></section>
+<section class="sec" id="dgs"><h3>📋 <span data-t="digest"></span></h3><div class="kw" id="kw"></div><div class="digest" id="digest"></div></section>
 <section class="sec"><h3 id="moret"></h3><div class="grid" id="grid"></div></section>
-<div class="foot"><span data-i="foot"></span> <span id="srcs"></span><br><span data-i="keys"></span></div>
+<div class="foot"><span data-t="foot"></span> <span id="srcs"></span><br><span data-t="keys"></span></div>
 </main>
-<div class="ticker"><div class="lb">🔥 <span data-i="hot"></span></div><div class="w"><div class="r" id="tk"></div></div></div>
-<button id="inst">📲 <span data-i="install"></span></button>
+<div class="ticker"><div class="lb">🔥 <span data-t="hot"></span></div><div class="w"><div class="r" id="tk"></div></div></div>
+<button id="inst">📲 <span data-t="install"></span></button>
 <script>
 const TZ="Asia/Ho_Chi_Minh";const CH=[["all"],["the-gioi"],["thoi-su"],["kinh-te-vn"],["tai-chinh"],["bat-dong-san"]];
 const I18N={
-vi:{loc:L_().loc,title:"Bách Sự Thông – Tin tức mỗi ngày",brand:"Bách Sự Thông",live:"● TRỰC TIẾP",onair:"ĐANG PHÁT",hot:"TIN NÓNG",digest:"Tóm tắt hôm nay",install:"Cài app",loading:"Đang tải…",upd:"Cập nhật lúc",more:"Tin khác",news:"tin",empty:"Chưa có tin",err:"Không tải được tin – kiểm tra mạng",errl:"Không tải được tin",src:"Nguồn",in24:(n,s)=>`${n} tin trong 24 giờ từ ${s} nguồn`,now:"vừa xong",min:m=>m+" phút trước",hr:h=>h+" giờ trước",prev:"Tin trước",pause:"Tạm dừng / Phát",next:"Tin sau",tr:"Dịch",ios:'Trên iPhone/iPad: mở bằng Safari → bấm nút Chia sẻ → chọn "Thêm vào MH chính".',
+vi:{loc:"vi-VN",title:"Bách Sự Thông – Tin tức mỗi ngày",brand:"Bách Sự Thông",live:"● TRỰC TIẾP",onair:"ĐANG PHÁT",hot:"TIN NÓNG",digest:"Tóm tắt hôm nay",install:"Cài app",loading:"Đang tải…",upd:"Cập nhật lúc",more:"Tin khác",news:"tin",empty:"Chưa có tin",err:"Không tải được tin – kiểm tra mạng",errl:"Không tải được tin",src:"Nguồn",in24:(n,s)=>`${n} tin trong 24 giờ từ ${s} nguồn`,now:"vừa xong",min:m=>m+" phút trước",hr:h=>h+" giờ trước",prev:"Tin trước",pause:"Tạm dừng / Phát",next:"Tin sau",tr:"Dịch",ios:'Trên iPhone/iPad: mở bằng Safari → bấm nút Chia sẻ → chọn "Thêm vào MH chính".',
  ch:["Tất cả","Kinh tế thế giới","Thời sự trong nước","Kinh tế – Xã hội VN","Tài chính – Chứng khoán","Bất động sản"],
  foot:"Bách Sự Thông chỉ hiển thị tiêu đề, tóm tắt ngắn và ảnh đại diện từ nguồn tin RSS công khai của các báo; bấm vào tin để đọc bài gốc trên trang báo. Bản quyền nội dung thuộc về các cơ quan báo chí.",keys:"Phím tắt: ← → đổi kênh · ↑ ↓ đổi tin · Phím cách: tạm dừng/phát."},
 en:{loc:"en-GB",title:"Bách Sự Thông – Daily News",brand:"Bách Sự Thông",live:"● LIVE",onair:"ON AIR",hot:"BREAKING",digest:"Today's summary",install:"Install app",loading:"Loading…",upd:"Updated",more:"More news",news:"stories",empty:"No news yet",err:"Couldn't load news – check your connection",errl:"Couldn't load news",src:"Sources",in24:(n,s)=>`${n} stories in 24h from ${s} sources`,now:"just now",min:m=>m+" min ago",hr:h=>h+" h ago",prev:"Previous",pause:"Pause / Play",next:"Next",tr:"Translate",ios:'On iPhone/iPad: open in Safari → tap Share → choose "Add to Home Screen".',
@@ -94,7 +94,7 @@ zh:{loc:"zh-CN",title:"百事通 Bách Sự Thông – 每日新闻",brand:"百�
 let LG=localStorage.bstLang in I18N?localStorage.bstLang:"vi";const L_=()=>I18N[LG];
 function trl(u){return LG=="vi"?"":`<span class="tr" role="link" onclick="event.preventDefault();event.stopPropagation();open('https://translate.google.com/translate?sl=auto&tl=${LG=="zh"?"zh-CN":"en"}&u=${encodeURIComponent(u)}','_blank','noopener')">🌐 ${L_().tr}</span>`}
 function setLang(l){LG=l;localStorage.bstLang=l;const t=L_();document.documentElement.lang=l=="zh"?"zh-CN":l;document.title=t.title;
- document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t[e.dataset.i]);document.querySelector(".logo span").textContent=t.brand;
+ document.querySelectorAll("[data-t]").forEach(e=>e.textContent=t[e.dataset.t]);document.querySelector(".logo span").textContent=t.brand;
  document.querySelectorAll("#lang button").forEach(b=>b.classList.toggle("on",b.dataset.l==l));
  if(window.pb){$("pv").title=t.prev;$("pp").title=t.pause;$("nx").title=t.next}
  nav();if(D){showUpd();ticker();digest();const k=idx;render();go(k)}else $("upd").textContent=t.loading}
