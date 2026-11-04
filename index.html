@@ -73,7 +73,7 @@ main{max-width:1400px;margin:0 auto;padding:14px 16px 90px}
 @keyframes pulse{50%{transform:translate(-50%,-50%) scale(1.06)}}.hero.tv #tvgo{display:none}
 .ctrl input{width:80px;accent-color:var(--y)}.ctrl{align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .tvw{position:relative;min-width:0}.stage>.tvw{align-self:start}
-.tvw:fullscreen,.tvw.fsx{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center}.tvw:fullscreen .hero,.tvw.fsx .hero{width:min(100vw,177.78vh);border-radius:0}
+.tvw:fullscreen,body.radio #himg,body.radio .kbw,body.radio #list img,body.radio #grid img{display:none}body.radio .hero{background:linear-gradient(135deg,#0b1d3a,#3a0b2a)}#rdo{position:absolute;right:12px;top:44px;z-index:6;background:rgba(0,0,0,.6);color:#fff;border:1px solid #ffd54a;border-radius:20px;padding:6px 12px;font-size:13px;cursor:pointer}body.radio #rdo{background:#ffd54a;color:#000}.tvw.fsx{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center}.tvw:fullscreen .hero,.tvw.fsx .hero{width:min(100vw,177.78vh);border-radius:0}
 .tvw:fullscreen .htk,.tvw.fsx .htk{display:flex;position:absolute;left:0;right:0;bottom:0;height:40px;background:#000;border-top:2px solid var(--red);overflow:hidden;align-items:center;z-index:2}
 .tvw:fullscreen .ov,.tvw.fsx .ov{padding-bottom:60px}.tvw:fullscreen .prog,.tvw.fsx .prog{bottom:40px}.tvw:fullscreen h1,.tvw.fsx h1{font-size:clamp(24px,3.4vw,48px)}
 .htk .r{display:inline-flex;white-space:nowrap;animation:mq linear infinite;padding-left:100%}.htk .r a{margin-right:40px;font-size:17px}.htk .r a b{color:var(--y);margin-right:6px}
@@ -96,7 +96,7 @@ main{max-width:1400px;margin:0 auto;padding:14px 16px 90px}
 <nav id="nav"></nav>
 <main>
 <div class="stage">
- <div class="tvw" id="tv"><div class="hero" id="hero"><div class="kbw"><img id="himg" alt=""></div><div class="lt" id="lt"><b>BST</b><span id="ltch"></span><i class="live">LIVE</i><span id="ltck"></span></div><div class="htk"><div class="r" id="htk"></div></div><button id="tvgo"></button><div class="ov"><div class="badge"><span class="on" data-t="onair"></span><span class="src" id="hsrc"></span><span id="htime" style="color:#ccd"></span></div><h1 id="htt"></h1><div id="sub"></div><p id="hsum"></p></div><div class="prog" id="prog"></div></div></div>
+ <div class="tvw" id="tv"><div class="hero" id="hero"><div class="kbw"><img id="himg" alt=""></div><div class="lt" id="lt"><b>BST</b><span id="ltch"></span><i class="live">LIVE</i><span id="ltck"></span></div><div class="htk"><div class="r" id="htk"></div></div><button id="tvgo"></button><button id="rdo"></button><div class="ov"><div class="badge"><span class="on" data-t="onair"></span><span class="src" id="hsrc"></span><span id="htime" style="color:#ccd"></span></div><h1 id="htt"></h1><div id="sub"></div><p id="hsum"></p></div><div class="prog" id="prog"></div></div></div>
  <div class="side"><h3 id="sidet"></h3><div id="list"></div></div>
 </div>
 <section class="sec" id="dgs"><h3>📋 <span data-t="digest"></span></h3><div class="kw" id="kw"></div><div class="digest" id="digest"></div></section>
@@ -109,13 +109,13 @@ main{max-width:1400px;margin:0 auto;padding:14px 16px 90px}
 <script>
 const TZ="Asia/Ho_Chi_Minh";const CH=[["all"],["the-gioi"],["thoi-su"],["kinh-te-vn"],["tai-chinh"],["bat-dong-san"]];
 const I18N={
-vi:{mcF:"👩 MC Nữ",mcM:"👨 MC Nam",mcT:"Chọn giọng phát thanh viên",trn:s=>"Bản dịch tự động từ "+s+" – xem bài gốc để có nội dung chính xác.",back:"← Quay lại",readat:s=>"Đọc bài gốc tại "+s+" ↗",watch:"▶ Xem bản tin",mute:"Tắt/bật tiếng",fs:"Toàn màn hình",jg:"Nhạc nền",vol:"Âm lượng",artload:"Đang tải nội dung…",artfail:"Chưa có nội dung chi tiết cho tin này – xem tóm tắt và đọc bài gốc tại trang báo.",excerpt:"Trích đoạn – nội dung đầy đủ và bản quyền thuộc về",novoice:"(Thiết bị chưa có giọng đọc cho ngôn ngữ này – hiển thị phụ đề)",loc:"vi-VN",title:"Bách Sự Thông – Tin tức mỗi ngày",brand:"Bách Sự Thông",live:"● TRỰC TIẾP",onair:"ĐANG PHÁT",hot:"TIN NÓNG",digest:"Tóm tắt hôm nay",install:"Cài app",loading:"Đang tải…",upd:"Cập nhật lúc",more:"Tin khác",news:"tin",empty:"Chưa có tin",err:"Không tải được tin – kiểm tra mạng",errl:"Không tải được tin",src:"Nguồn",in24:(n,s)=>`${n} tin trong 24 giờ từ ${s} nguồn`,now:"vừa xong",min:m=>m+" phút trước",hr:h=>h+" giờ trước",prev:"Tin trước",pause:"Tạm dừng / Phát",next:"Tin sau",tr:"Dịch",ios:'Trên iPhone/iPad: mở bằng Safari → bấm nút Chia sẻ → chọn "Thêm vào MH chính".',
+vi:{radio:"📻 Chế độ nghe (radio)",radioT:"Chỉ phát âm thanh, tiết kiệm dữ liệu – vẫn phát khi tắt màn hình",wake:"Giữ màn hình sáng",bulletin:"Bản tin",mcF:"👩 MC Nữ",mcM:"👨 MC Nam",mcT:"Chọn giọng phát thanh viên",trn:s=>"Bản dịch tự động từ "+s+" – xem bài gốc để có nội dung chính xác.",back:"← Quay lại",readat:s=>"Đọc bài gốc tại "+s+" ↗",watch:"▶ Xem bản tin",mute:"Tắt/bật tiếng",fs:"Toàn màn hình",jg:"Nhạc nền",vol:"Âm lượng",artload:"Đang tải nội dung…",artfail:"Chưa có nội dung chi tiết cho tin này – xem tóm tắt và đọc bài gốc tại trang báo.",excerpt:"Trích đoạn – nội dung đầy đủ và bản quyền thuộc về",novoice:"(Thiết bị chưa có giọng đọc cho ngôn ngữ này – hiển thị phụ đề)",loc:"vi-VN",title:"Bách Sự Thông – Tin tức mỗi ngày",brand:"Bách Sự Thông",live:"● TRỰC TIẾP",onair:"ĐANG PHÁT",hot:"TIN NÓNG",digest:"Tóm tắt hôm nay",install:"Cài app",loading:"Đang tải…",upd:"Cập nhật lúc",more:"Tin khác",news:"tin",empty:"Chưa có tin",err:"Không tải được tin – kiểm tra mạng",errl:"Không tải được tin",src:"Nguồn",in24:(n,s)=>`${n} tin trong 24 giờ từ ${s} nguồn`,now:"vừa xong",min:m=>m+" phút trước",hr:h=>h+" giờ trước",prev:"Tin trước",pause:"Tạm dừng / Phát",next:"Tin sau",tr:"Dịch",ios:'Trên iPhone/iPad: mở bằng Safari → bấm nút Chia sẻ → chọn "Thêm vào MH chính".',
  ch:["Tất cả","Kinh tế thế giới","Thời sự trong nước","Kinh tế – Xã hội VN","Tài chính – Chứng khoán","Bất động sản"],
  foot:"Bách Sự Thông chỉ hiển thị tiêu đề, tóm tắt ngắn và ảnh đại diện từ nguồn tin RSS công khai của các báo; bấm vào tin để đọc bài gốc trên trang báo. Bản quyền nội dung thuộc về các cơ quan báo chí.",keys:"Phím tắt: ← → đổi kênh · ↑ ↓ đổi tin · Phím cách: tạm dừng/phát · F: toàn màn hình · M: tắt tiếng."},
-en:{mcF:"👩 Female anchor",mcM:"👨 Male anchor",mcT:"Choose the newsreader voice",trn:s=>"Machine translation from "+s+" – see the original for exact wording.",back:"← Back",readat:s=>"Read the original at "+s+" ↗",watch:"▶ Watch the news",mute:"Mute/unmute",fs:"Full screen",jg:"Background music",vol:"Volume",artload:"Loading article…",artfail:"No detailed text for this story yet – see the summary and read the original article.",excerpt:"Excerpt – full article and copyright belong to",novoice:"(No voice for this language on this device – showing subtitles)",loc:"en-GB",title:"Bách Sự Thông – Daily News",brand:"Bách Sự Thông",live:"● LIVE",onair:"ON AIR",hot:"BREAKING",digest:"Today's summary",install:"Install app",loading:"Loading…",upd:"Updated",more:"More news",news:"stories",empty:"No news yet",err:"Couldn't load news – check your connection",errl:"Couldn't load news",src:"Sources",in24:(n,s)=>`${n} stories in 24h from ${s} sources`,now:"just now",min:m=>m+" min ago",hr:h=>h+" h ago",prev:"Previous",pause:"Pause / Play",next:"Next",tr:"Translate",ios:'On iPhone/iPad: open in Safari → tap Share → choose "Add to Home Screen".',
+en:{radio:"📻 Listen mode (radio)",radioT:"Audio only, low data – keeps playing with the screen off",wake:"Keep screen on",bulletin:"Bulletin",mcF:"👩 Female anchor",mcM:"👨 Male anchor",mcT:"Choose the newsreader voice",trn:s=>"Machine translation from "+s+" – see the original for exact wording.",back:"← Back",readat:s=>"Read the original at "+s+" ↗",watch:"▶ Watch the news",mute:"Mute/unmute",fs:"Full screen",jg:"Background music",vol:"Volume",artload:"Loading article…",artfail:"No detailed text for this story yet – see the summary and read the original article.",excerpt:"Excerpt – full article and copyright belong to",novoice:"(No voice for this language on this device – showing subtitles)",loc:"en-GB",title:"Bách Sự Thông – Daily News",brand:"Bách Sự Thông",live:"● LIVE",onair:"ON AIR",hot:"BREAKING",digest:"Today's summary",install:"Install app",loading:"Loading…",upd:"Updated",more:"More news",news:"stories",empty:"No news yet",err:"Couldn't load news – check your connection",errl:"Couldn't load news",src:"Sources",in24:(n,s)=>`${n} stories in 24h from ${s} sources`,now:"just now",min:m=>m+" min ago",hr:h=>h+" h ago",prev:"Previous",pause:"Pause / Play",next:"Next",tr:"Translate",ios:'On iPhone/iPad: open in Safari → tap Share → choose "Add to Home Screen".',
  ch:["All","World economy","Vietnam news","Vietnam economy & society","Finance & stocks","Real estate"],
  foot:"Bách Sự Thông only shows headlines, short summaries and thumbnails from the outlets' public RSS feeds; tap a story to read the original article. Content copyright belongs to the publishers. Headlines appear in their original language.",keys:"Shortcuts: ← → change channel · ↑ ↓ change story · Space: pause/play · F: full screen · M: mute."},
-zh:{mcF:"👩 女主播",mcM:"👨 男主播",mcT:"选择主播声音",trn:s=>"由 "+s+" 原文机器翻译 – 准确内容请阅读原文。",back:"← 返回",readat:s=>"在 "+s+" 阅读原文 ↗",watch:"▶ 观看新闻",mute:"静音/取消静音",fs:"全屏",jg:"背景音乐",vol:"音量",artload:"正在加载内容…",artfail:"暂无此新闻的详细内容 – 请查看摘要并阅读原文。",excerpt:"摘录 – 全文及版权归",novoice:"（此设备没有该语言的语音 – 显示字幕）",loc:"zh-CN",title:"百事通 Bách Sự Thông – 每日新闻",brand:"百事通",live:"● 直播",onair:"正在播出",hot:"热点新闻",digest:"今日摘要",install:"安装应用",loading:"加载中…",upd:"更新于",more:"更多新闻",news:"条",empty:"暂无新闻",err:"无法加载新闻 – 请检查网络",errl:"无法加载新闻",src:"来源",in24:(n,s)=>`24小时内 ${n} 条，来自 ${s} 个来源`,now:"刚刚",min:m=>m+" 分钟前",hr:h=>h+" 小时前",prev:"上一条",pause:"暂停 / 播放",next:"下一条",tr:"翻译",ios:"在 iPhone/iPad 上：用 Safari 打开 → 点击“分享” → 选择“添加到主屏幕”。",
+zh:{radio:"📻 收听模式（电台）",radioT:"仅音频，省流量 – 锁屏后继续播放",wake:"保持屏幕常亮",bulletin:"新闻",mcF:"👩 女主播",mcM:"👨 男主播",mcT:"选择主播声音",trn:s=>"由 "+s+" 原文机器翻译 – 准确内容请阅读原文。",back:"← 返回",readat:s=>"在 "+s+" 阅读原文 ↗",watch:"▶ 观看新闻",mute:"静音/取消静音",fs:"全屏",jg:"背景音乐",vol:"音量",artload:"正在加载内容…",artfail:"暂无此新闻的详细内容 – 请查看摘要并阅读原文。",excerpt:"摘录 – 全文及版权归",novoice:"（此设备没有该语言的语音 – 显示字幕）",loc:"zh-CN",title:"百事通 Bách Sự Thông – 每日新闻",brand:"百事通",live:"● 直播",onair:"正在播出",hot:"热点新闻",digest:"今日摘要",install:"安装应用",loading:"加载中…",upd:"更新于",more:"更多新闻",news:"条",empty:"暂无新闻",err:"无法加载新闻 – 请检查网络",errl:"无法加载新闻",src:"来源",in24:(n,s)=>`24小时内 ${n} 条，来自 ${s} 个来源`,now:"刚刚",min:m=>m+" 分钟前",hr:h=>h+" 小时前",prev:"上一条",pause:"暂停 / 播放",next:"下一条",tr:"翻译",ios:"在 iPhone/iPad 上：用 Safari 打开 → 点击“分享” → 选择“添加到主屏幕”。",
  ch:["全部","世界经济","越南时事","越南经济社会","金融与股市","房地产"],
  foot:"百事通仅显示各报公开 RSS 中的标题、简短摘要和缩略图；点击新闻可阅读原文。内容版权归各新闻机构所有。新闻标题保持原文语言。",keys:"快捷键：← → 切换频道 · ↑ ↓ 切换新闻 · 空格：暂停/播放 · F：全屏 · M：静音。"}};
 let LG=localStorage.bstLang in I18N?localStorage.bstLang:"vi";const L_=()=>I18N[LG];
@@ -123,7 +123,7 @@ function trl(u){return ""; return LG=="vi"?"":`<span class="tr" role="link" oncl
 function setLang(l){LG=l;localStorage.bstLang=l;const t=L_();document.documentElement.lang=l=="zh"?"zh-CN":l;document.title=t.title;
  document.querySelectorAll("[data-t]").forEach(e=>e.textContent=t[e.dataset.t]);document.querySelector(".logo span").textContent=t.brand;
  document.querySelectorAll("#lang button").forEach(b=>b.classList.toggle("on",b.dataset.l==l));
- if(window.pb){$("pv").title=t.prev;$("pp").title=t.pause;$("nx").title=t.next;$("mu").title=t.mute;$("fs").title=t.fs;$("jg").title=t.jg;$("vo").title=t.vol}$("tvgo").textContent=t.watch;$("rdback").textContent=t.back;
+ if(window.pb){$("pv").title=t.prev;$("pp").title=t.pause;$("nx").title=t.next;$("mu").title=t.mute;$("fs").title=t.fs;$("jg").title=t.jg;$("vo").title=t.vol}$("tvgo").textContent=t.watch;$("rdo").textContent=t.radio;$("rdo").title=t.radioT;$("wk").title=t.wake;$("rdback").textContent=t.back;
  $("mc").textContent=MC=="m"?t.mcM:t.mcF;$("mc").title=t.mcT;nav();if(D){const id=(cur()||{}).id;stopSpeak();load(false).then(()=>{render();const L=items().slice(0,TVN),k=L.findIndex(x=>x.id==id);go(k<0?0:k);if(!$("rd").hidden)route()})}else $("upd").textContent=t.loading}
 const $=id=>document.getElementById(id),esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const PH="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 9"><rect width="16" height="9" fill="#1b2347"/><text x="8" y="5.6" font-size="3" text-anchor="middle" fill="#c8102e" font-family="Arial" font-weight="bold">BST</text></svg>');
@@ -137,8 +137,8 @@ function tick(){const n=new Date();$("ltck").textContent=n.toLocaleTimeString(L_
 function nav(){$("nav").innerHTML=CH.map((c,i)=>`<button class="${i==ch?"on":""}" data-i="${i}"><span class="n">${String(i).padStart(2,"0")}</span>${L_().ch[i]}</button>`).join("");
  $("nav").querySelectorAll("button").forEach(b=>b.onclick=()=>setCh(+b.dataset.i));const on=$("nav").querySelector(".on"),nv=$("nav");if(on)nv.scrollLeft=on.offsetLeft-(nv.clientWidth-on.offsetWidth)/2}
 function setCh(i){ch=(i+CH.length)%CH.length;localStorage.bstCh=ch;idx=0;nav();render()}
-function go(i){if(tvOn&&window.AU_PENDING&&AU_PENDING()){stopSpeak();const L0=items().slice(0,TVN);if(L0.length)idx=(i+L0.length)%L0.length;if(AU_TRY())return}const L=items().slice(0,TVN);if(!L.length)return;idx=(i+L.length)%L.length;const x=L[idx];
- $("hero").dataset.id=x.id;const im=$("himg");im.style.opacity=0;setTimeout(()=>{im.src=img(x);im.onerror=()=>im.src=PH;im.className="kb"+(Math.random()*4|0);im.style.opacity=1},150);$("ltch").textContent=L_().ch[CH.findIndex(c=>c[0]==x.channel)];
+function go(i){if(tvOn&&!document.hidden&&window.AU_PENDING&&AU_PENDING()){stopSpeak();const L0=items().slice(0,TVN);if(L0.length)idx=(i+L0.length)%L0.length;if(AU_TRY())return}const L=items().slice(0,TVN);if(!L.length)return;idx=(i+L.length)%L.length;const x=L[idx];
+ $("hero").dataset.id=x.id;const im=$("himg");im.style.opacity=0;setTimeout(()=>{if(RADIO)return;im.src=img(x);im.onerror=()=>im.src=PH;im.className="kb"+(Math.random()*4|0);im.style.opacity=1},150);$("ltch").textContent=L_().ch[CH.findIndex(c=>c[0]==x.channel)];
  $("hsrc").innerHTML=esc(x.source+" · "+L_().ch[CH.findIndex(c=>c[0]==x.channel)])+trl(x.link);$("htime").textContent=ago(x.time);$("htt").textContent=x.title;$("hsum").textContent=x.summary;
  document.querySelectorAll("#list .it").forEach((e,j)=>e.classList.toggle("cur",j==idx));const c=document.querySelector("#list .cur"),sd=document.querySelector(".side");if(c&&sd.scrollHeight>sd.clientHeight+4){const top=c.offsetTop-sd.offsetTop;if(top<sd.scrollTop||top+c.offsetHeight>sd.scrollTop+sd.clientHeight)sd.scrollTop=top-8}t0=Date.now();if(tvOn)narrate(x)}
 function render(){const L=items();$("sidet").textContent="📺 "+L_().ch[ch]+" ("+L.length+" "+L_().news+")";
@@ -160,12 +160,12 @@ showUpd();
 function showUpd(){$("upd").textContent=L_().upd+" "+new Date(D.updated*1000).toLocaleString(L_().loc,{timeZone:TZ,hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit"});
 $("srcs").textContent=L_().src+": "+[...new Set(D.sources_ok.map(s=>s[0]))].join(", ")+".";
 }
-const pb=document.createElement("div");pb.className="ctrl";pb.innerHTML='<button id="pv">⏮</button><button id="pp">⏸</button><button id="nx">⏭</button><button id="mu">🔊</button><input id="vo" type="range" min="0" max="1" step="0.1" value="1"><button id="jg">🎵</button><button id="mc"></button><button id="fs">⛶</button>';$("tv").appendChild(pb);window.pb=pb;
+const pb=document.createElement("div");pb.className="ctrl";pb.innerHTML='<button id="pv">⏮</button><button id="pp">⏸</button><button id="nx">⏭</button><button id="mu">🔊</button><input id="vo" type="range" min="0" max="1" step="0.1" value="1"><button id="jg">🎵</button><button id="mc"></button><button id="wk">💡</button><button id="fs">⛶</button>';$("tv").appendChild(pb);window.pb=pb;
 pb.onclick=e=>{e.stopPropagation();const id=e.target.id;if(id=="vo")return;e.preventDefault();if(id=="pv")go(idx-1);if(id=="nx")go(idx+1);
  if(id=="pp"){play=!play;e.target.textContent=play?"⏸":"▶";t0=Date.now();if(tvOn){if(play)narrate(cur());else stopSpeak()}}
  if(id=="mu"){muted=!muted;e.target.textContent=muted?"🔇":"🔊";if(tvOn&&play)narrate(cur())}
  if(id=="jg"){jgOn=!jgOn;e.target.style.opacity=jgOn?1:.4;localStorage.bstJg=jgOn?1:0}
- if(id=="fs")toggleFs();if(id=="mc"){MC=MC=="m"?"f":"m";localStorage.bstMc=MC;e.target.textContent=MC=="m"?L_().mcM:L_().mcF;if(tvOn&&play)narrate(cur())}};
+ if(id=="fs")toggleFs();if(id=="wk")toggleWake();if(id=="mc"){MC=MC=="m"?"f":"m";localStorage.bstMc=MC;e.target.textContent=MC=="m"?L_().mcM:L_().mcF;if(tvOn&&play)narrate(cur())}};
 $("vo").oninput=e=>{vol=+e.target.value;AU.volume=vol;localStorage.bstVol=vol};$("vo").onclick=e=>e.stopPropagation();
 let MC=localStorage.bstMc||"f",AU=new Audio(),BY={},tvOn=false,muted=false,vol=+(localStorage.bstVol||1),jgOn=localStorage.bstJg!="0",tok=0,swiped=false,voices=[];$("vo").value=vol;$("jg").style.opacity=jgOn?1:.4;
 function cur(){return items().slice(0,TVN)[idx]}
@@ -174,14 +174,35 @@ function voiceFor(p){const v=voices.filter(v=>v.lang.toLowerCase().replace("_","
  return v.find(v=>/google|natural|online/i.test(v.name))||v.find(v=>p!="en"||/en-us/i.test(v.lang))||v[0]||null}
 function stopSpeak(){tok++;if(synth)synth.cancel();try{AU.pause();AU.onended=AU.ontimeupdate=AU.onerror=null}catch(e){}$("sub").textContent=""}
 let AC;function jingle(){if(!jgOn||muted||!vol)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime;[523.25,659.25,783.99,1046.5].forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type="sine";o.frequency.value=f;g.gain.setValueAtTime(0,t+i*.12);g.gain.linearRampToValueAtTime(.06*vol,t+i*.12+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.12+.5);o.connect(g).connect(AC.destination);o.start(t+i*.12);o.stop(t+i*.12+.55)})}catch(e){}}
-function narrate(x){if(!x)return;stopSpeak();if(!play)return;const my=tok;jingle();
- const cues=(AUD[x.id]||{})[MC];
- if(cues&&!muted&&vol>0){const startMp3=()=>{if(my!==tok)return;AU.src="data/audio/"+x.id+"."+LG+"."+MC+".mp3";AU.volume=vol;
-  AU.ontimeupdate=()=>{if(my!==tok)return;const t=AU.currentTime;let c="";for(const q of cues){if(q[0]<=t+0.15)c=q[1]}$("sub").textContent=c||(cues[0]||[0,""])[1];if(AU.duration)$("prog").style.width=(t/AU.duration*100)+"%"};
-  AU.onended=()=>{if(my===tok)setTimeout(()=>{if(my===tok&&tvOn&&play)go(idx+1)},900)};
-  AU.onerror=()=>{if(my===tok){tok++;speakFallback(x,tok)}};
-  AU.play().catch(err=>{if(my!==tok)return;if(err&&err.name=="NotAllowedError"){tok++;tvOn=false;$("hero").classList.remove("tv");$("sub").textContent="";return}tok++;speakFallback(x,tok)})};setTimeout(startMp3,jgOn?700:100);return}
+let RADIO=false,skips=0;const BG=()=>document.hidden||RADIO;
+function aurl(x){return "data/audio/"+x.id+"."+LG+"."+MC+".mp3"}
+function nextWithAudio(k){const L=items().slice(0,TVN);for(let j=1;j<=L.length;j++){const y=L[(k+j)%L.length];if((AUD[y.id]||{})[MC])return y}return null}
+function setMS(x){if(!("mediaSession" in navigator)||!x)return;try{const c=L_().ch[CH.findIndex(q=>q[0]==x.channel)]||"";navigator.mediaSession.metadata=new MediaMetadata({title:x.title,artist:"Bách Sự Thông · "+c,album:L_().bulletin+" "+L_().ch[ch],artwork:(x.image&&!RADIO?[{src:x.image,sizes:"512x512"}]:[]).concat([{src:"icon-512.png",sizes:"512x512",type:"image/png"},{src:"icon-192.png",sizes:"192x192",type:"image/png"}])})}catch(e){}}
+function msPos(){try{if(AU.duration&&isFinite(AU.duration))navigator.mediaSession.setPositionState({duration:AU.duration,position:Math.min(AU.currentTime,AU.duration),playbackRate:1})}catch(e){}}
+if("mediaSession" in navigator){const M=navigator.mediaSession,h=(k,f)=>{try{M.setActionHandler(k,f)}catch(e){}};
+ h("play",()=>{if(!tvOn){startTv();return}play=true;$("pp").textContent="⏸";if(AU.src&&AU.currentTime>0&&!AU.ended)AU.play().catch(()=>{});else narrate(cur());M.playbackState="playing"});
+ h("pause",()=>{play=false;$("pp").textContent="▶";AU.pause();if(synth)synth.cancel();M.playbackState="paused"});
+ h("stop",()=>{play=false;$("pp").textContent="▶";stopSpeak();M.playbackState="paused"});
+ h("previoustrack",()=>go(idx-1));h("nexttrack",()=>go(idx+1));
+ h("seekto",d=>{if(d.seekTime!=null){AU.currentTime=d.seekTime;msPos()}});
+ h("seekbackward",d=>{AU.currentTime=Math.max(0,AU.currentTime-(d.seekOffset||10));msPos()});
+ h("seekforward",d=>{AU.currentTime=Math.min(AU.duration||0,AU.currentTime+(d.seekOffset||10));msPos()})}
+AU.preload="auto";AU.setAttribute("playsinline","");
+function narrate(x){if(!x)return;stopSpeak();if(!play)return;const my=tok;
+ const cues=(AUD[x.id]||{})[MC];setMS(x);
+ if(!cues&&BG()){if(++skips>TVN){skips=0;return}go(idx+1);return}skips=0;
+ if(cues&&!muted&&vol>0){const bg=BG();if(!bg)jingle();const startMp3=()=>{if(my!==tok)return;AU.src=aurl(x);AU.volume=vol;
+  AU.ontimeupdate=()=>{if(my!==tok)return;const t=AU.currentTime;if(document.hidden)return;let c="";for(const q of cues){if(q[0]<=t+0.15)c=q[1]}$("sub").textContent=c||(cues[0]||[0,""])[1];if(AU.duration)$("prog").style.width=(t/AU.duration*100)+"%"};
+  AU.onloadedmetadata=msPos;
+  AU.onended=()=>{if(my!==tok)return;if(BG()){if(tvOn&&play)go(idx+1)}else setTimeout(()=>{if(my===tok&&tvOn&&play)go(idx+1)},900)};
+  AU.onerror=()=>{if(my!==tok)return;tok++;if(BG())go(idx+1);else speakFallback(x,tok)};
+  AU.play().then(()=>{if("mediaSession" in navigator)navigator.mediaSession.playbackState="playing";const n=nextWithAudio(idx);if(n)fetch(aurl(n)).catch(()=>{})}).catch(err=>{if(my!==tok)return;if(err&&err.name=="NotAllowedError"){tok++;tvOn=false;$("hero").classList.remove("tv");document.body.classList.remove("radio");RADIO=false;$("sub").textContent="";return}tok++;if(BG())go(idx+1);else speakFallback(x,tok)})};
+  if(bg)startMp3();else setTimeout(startMp3,jgOn?700:100);return}
  speakFallback(x,my)}
+let WL=null,wkOn=localStorage.bstWk=="1";async function reqWake(){if(!wkOn||WL||!("wakeLock" in navigator)||document.hidden||!tvOn)return;try{WL=await navigator.wakeLock.request("screen");WL.addEventListener("release",()=>{WL=null})}catch(e){}}
+function toggleWake(){wkOn=!wkOn;localStorage.bstWk=wkOn?"1":"0";$("wk").style.opacity=wkOn?1:.4;if(wkOn)reqWake();else if(WL){WL.release();WL=null}}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)return;reqWake();const x=cur();if(x&&tvOn&&$("hero").dataset.id!=x.id){const k=idx,save=tvOn;tvOn=false;go(k);tvOn=save}});
+function startRadio(){RADIO=true;document.body.classList.add("radio");startTv()}
 function speakFallback(x,my){
  const text=(x.title.replace(/[.。!?！？]\s*$/,"")+". "+(x.summary||"")).replace(/…$/,".");
  const parts=text.split(/(?<=[.!?。！？])\s+/).map(s=>s.trim()).filter(s=>s.length>1);const v=voiceFor(/[ăâđêôơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]/i.test(text)?"vi":/[\u4e00-\u9fff]/.test(text)?"zh":"en");let i=0;
@@ -191,8 +212,8 @@ function speakFallback(x,my){
    setTimeout(()=>{if(my===tok&&!done&&!synth.speaking)fin()},Math.max(6000,s.length*160));synth.speak(u)}
   else{if(i==1&&!v&&!muted)$("sub").textContent=s+" "+L_().novoice;setTimeout(next,Math.max(2800,s.length*65))}};
  setTimeout(next,jgOn?700:100)}
-function startTv(){tvOn=true;play=true;$("pp").textContent="⏸";$("hero").classList.add("tv");if(synth){synth.cancel()}go(idx)}
-$("tvgo").onclick=e=>{e.stopPropagation();startTv()};
+function startTv(){tvOn=true;reqWake();play=true;$("pp").textContent="⏸";$("hero").classList.add("tv");if(synth){synth.cancel()}go(idx)}
+$("tvgo").onclick=e=>{e.stopPropagation();RADIO=false;document.body.classList.remove("radio");startTv()};$("rdo").onclick=e=>{e.stopPropagation();e.preventDefault();if(RADIO){RADIO=false;document.body.classList.remove("radio");go(idx)}else startRadio()};$("wk").style.opacity=wkOn?1:.4;
 function toggleFs(){const h=$("tv");if(document.fullscreenElement){document.exitFullscreen()}else if(h.classList.contains("fsx")){h.classList.remove("fsx")}else if(h.requestFullscreen){h.requestFullscreen().catch(()=>h.classList.add("fsx"))}else h.classList.add("fsx")}
 $("hero").addEventListener("click",e=>{if(swiped){swiped=false;return}if(e.target.closest(".ctrl,.tr,#tvgo"))return;if(document.fullscreenElement||$("tv").classList.contains("fsx"))return;openStory($("hero").dataset.id)});
 document.addEventListener("click",e=>{if(e.target.closest(".tr"))return;const a=e.target.closest("[data-id]");if(!a||a.id=="hero")return;e.preventDefault();if(a.classList.contains("it"))go(+a.dataset.j);openStory(a.dataset.id)});
@@ -220,7 +241,7 @@ const ios=/iphone|ipad|ipod/i.test(navigator.userAgent),sa=matchMedia("(display-
 if(ios&&!sa)$("inst").style.display="block";
 $("inst").onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$("inst").style.display="none"}else alert(L_().ios)};
 addEventListener("appinstalled",()=>$("inst").style.display="none");
-window.AU_LANG=()=>LG;window.AU_STATE=()=>{if(tvOn&&play&&((!AU.paused&&!AU.ended)||(synth&&synth.speaking)))return"busy";return"idle"};
+window.AU_LANG=()=>LG;window.AU_STATE=()=>tvOn&&play?"busy":"idle";
 window.AU_BEFORE=()=>{sessionStorage.bstResume=tvOn&&play?"1":"";sessionStorage.bstCur=(cur()||{}).id||""};
 </script><script>/* Tự động cập nhật phiên bản mới (version.json) */
 (()=>{const CUR=(document.querySelector('meta[name="app-version"]')||{}).content||"dev";window.APP_VERSION=CUR;
