@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Bách Sự Thông – Tin tức mỗi ngày</title>
 <meta name="description" content="Tổng hợp tin kinh tế thế giới, thời sự, kinh tế – xã hội Việt Nam, tài chính – chứng khoán từ các báo lớn.">
-<meta name="theme-color" content="#0a0e1e"><link rel="manifest" href="manifest.webmanifest">
+<meta name="app-version" content="__APP_VERSION__"><meta name="theme-color" content="#0a0e1e"><link rel="manifest" href="manifest.webmanifest?v=__APP_VERSION__">
 <link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Bách Sự Thông">
 <style>
@@ -137,7 +137,7 @@ function tick(){const n=new Date();$("ltck").textContent=n.toLocaleTimeString(L_
 function nav(){$("nav").innerHTML=CH.map((c,i)=>`<button class="${i==ch?"on":""}" data-i="${i}"><span class="n">${String(i).padStart(2,"0")}</span>${L_().ch[i]}</button>`).join("");
  $("nav").querySelectorAll("button").forEach(b=>b.onclick=()=>setCh(+b.dataset.i));const on=$("nav").querySelector(".on"),nv=$("nav");if(on)nv.scrollLeft=on.offsetLeft-(nv.clientWidth-on.offsetWidth)/2}
 function setCh(i){ch=(i+CH.length)%CH.length;localStorage.bstCh=ch;idx=0;nav();render()}
-function go(i){const L=items().slice(0,TVN);if(!L.length)return;idx=(i+L.length)%L.length;const x=L[idx];
+function go(i){if(tvOn&&window.AU_PENDING&&AU_PENDING()){stopSpeak();const L0=items().slice(0,TVN);if(L0.length)idx=(i+L0.length)%L0.length;if(AU_TRY())return}const L=items().slice(0,TVN);if(!L.length)return;idx=(i+L.length)%L.length;const x=L[idx];
  $("hero").dataset.id=x.id;const im=$("himg");im.style.opacity=0;setTimeout(()=>{im.src=img(x);im.onerror=()=>im.src=PH;im.className="kb"+(Math.random()*4|0);im.style.opacity=1},150);$("ltch").textContent=L_().ch[CH.findIndex(c=>c[0]==x.channel)];
  $("hsrc").innerHTML=esc(x.source+" · "+L_().ch[CH.findIndex(c=>c[0]==x.channel)])+trl(x.link);$("htime").textContent=ago(x.time);$("htt").textContent=x.title;$("hsum").textContent=x.summary;
  document.querySelectorAll("#list .it").forEach((e,j)=>e.classList.toggle("cur",j==idx));const c=document.querySelector("#list .cur"),sd=document.querySelector(".side");if(c&&sd.scrollHeight>sd.clientHeight+4){const top=c.offsetTop-sd.offsetTop;if(top<sd.scrollTop||top+c.offsetHeight>sd.scrollTop+sd.clientHeight)sd.scrollTop=top-8}t0=Date.now();if(tvOn)narrate(x)}
@@ -156,7 +156,7 @@ function digest(){const day=Date.now()/1000-86400,T=D.items.filter(x=>x.time>day
 function ticker(){const L=mix(D.items.slice(0,120)).slice(0,25);$("tk").innerHTML=L.map(x=>`<a href="#tin/${x.id}" data-id="${x.id}"><b>${new Date(x.time*1000).toLocaleTimeString(L_().loc,{timeZone:TZ,hour:"2-digit",minute:"2-digit"})}</b>${esc(x.title)} <span class="meta">— ${esc(x.source)}</span></a>`).join("");$("tk").style.animationDuration=Math.max(60,L.length*9)+"s";$("htk").innerHTML=$("tk").innerHTML;$("htk").style.animationDuration=$("tk").style.animationDuration}
 let AUD={};async function load(first){try{let r=await fetch("data/news-"+LG+".json?t="+Date.now(),{cache:"no-store"});if(!r.ok)r=await fetch("data/news.json?t="+Date.now(),{cache:"no-store"});D=await r.json();AUD=await fetch("data/audio/"+LG+".json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():{}).catch(()=>({}));BY={};D.items.forEach(x=>BY[x.id]=x);
 showUpd();
- ticker();digest();if(first){render();route()}}catch(e){$("upd").textContent=L_().err;if(first)$("list").innerHTML='<div class="empty">'+L_().errl+'</div>'}}
+ ticker();digest();if(first){render();route();if(sessionStorage.bstResume){sessionStorage.bstResume="";const L=items().slice(0,TVN),k=L.findIndex(x=>x.id==sessionStorage.bstCur);if(k>=0)idx=k;startTv()}}}catch(e){$("upd").textContent=L_().err;if(first)$("list").innerHTML='<div class="empty">'+L_().errl+'</div>'}}
 function showUpd(){$("upd").textContent=L_().upd+" "+new Date(D.updated*1000).toLocaleString(L_().loc,{timeZone:TZ,hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit"});
 $("srcs").textContent=L_().src+": "+[...new Set(D.sources_ok.map(s=>s[0]))].join(", ")+".";
 }
@@ -180,7 +180,7 @@ function narrate(x){if(!x)return;stopSpeak();if(!play)return;const my=tok;jingle
   AU.ontimeupdate=()=>{if(my!==tok)return;const t=AU.currentTime;let c="";for(const q of cues){if(q[0]<=t+0.15)c=q[1]}$("sub").textContent=c||(cues[0]||[0,""])[1];if(AU.duration)$("prog").style.width=(t/AU.duration*100)+"%"};
   AU.onended=()=>{if(my===tok)setTimeout(()=>{if(my===tok&&tvOn&&play)go(idx+1)},900)};
   AU.onerror=()=>{if(my===tok){tok++;speakFallback(x,tok)}};
-  AU.play().catch(()=>{if(my===tok){tok++;speakFallback(x,tok)}})};setTimeout(startMp3,jgOn?700:100);return}
+  AU.play().catch(err=>{if(my!==tok)return;if(err&&err.name=="NotAllowedError"){tok++;tvOn=false;$("hero").classList.remove("tv");$("sub").textContent="";return}tok++;speakFallback(x,tok)})};setTimeout(startMp3,jgOn?700:100);return}
  speakFallback(x,my)}
 function speakFallback(x,my){
  const text=(x.title.replace(/[.。!?！？]\s*$/,"")+". "+(x.summary||"")).replace(/…$/,".");
@@ -220,5 +220,28 @@ const ios=/iphone|ipad|ipod/i.test(navigator.userAgent),sa=matchMedia("(display-
 if(ios&&!sa)$("inst").style.display="block";
 $("inst").onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$("inst").style.display="none"}else alert(L_().ios)};
 addEventListener("appinstalled",()=>$("inst").style.display="none");
-if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
-</script></body></html>
+window.AU_LANG=()=>LG;window.AU_STATE=()=>{if(tvOn&&play&&((!AU.paused&&!AU.ended)||(synth&&synth.speaking)))return"busy";return"idle"};
+window.AU_BEFORE=()=>{sessionStorage.bstResume=tvOn&&play?"1":"";sessionStorage.bstCur=(cur()||{}).id||""};
+</script><script>/* Tự động cập nhật phiên bản mới (version.json) */
+(()=>{const CUR=(document.querySelector('meta[name="app-version"]')||{}).content||"dev";window.APP_VERSION=CUR;
+const T={vi:["Có bản mới","Cập nhật"],en:["New version available","Update"],zh:["有新版本","更新"]};
+try{const u=new URL(location.href);if(u.searchParams.has("v")){u.searchParams.delete("v");history.replaceState(history.state,"",u.pathname+u.search+u.hash)}}catch(e){}
+let pending=null;
+const st=()=>{try{return window.AU_STATE?AU_STATE():"idle"}catch(e){return"idle"}};
+const lang=()=>{try{const l=(window.AU_LANG?AU_LANG():document.documentElement.lang||"vi").slice(0,2);return T[l]?l:"vi"}catch(e){return"vi"}};
+function apply(){if(!pending)return;try{window.AU_BEFORE&&AU_BEFORE()}catch(e){}sessionStorage.auTried=pending;const u=new URL(location.href);u.searchParams.set("v",pending);location.replace(u.toString())}
+function toast(){let d=document.getElementById("auT");const t=T[lang()];if(!d){d=document.createElement("div");d.id="auT";d.style.cssText="position:fixed;left:50%;transform:translateX(-50%);bottom:calc(64px + env(safe-area-inset-bottom));z-index:2147483000;background:#111a;backdrop-filter:blur(6px);color:#fff;border:1px solid #fff3;border-radius:999px;padding:8px 8px 8px 16px;display:flex;gap:10px;align-items:center;font:600 14px system-ui,sans-serif;box-shadow:0 6px 24px #0008";
+ d.innerHTML='<span></span><button style="background:#ffc800;color:#000;border:0;border-radius:999px;padding:7px 14px;font-weight:700;cursor:pointer"></button>';d.querySelector("button").onclick=()=>{if(st()=="busy"){d.querySelector("span").textContent="⏳ "+t[0]}else apply()};document.body.appendChild(d)}
+ d.querySelector("span").textContent="🔄 "+t[0];d.querySelector("button").textContent=t[1]}
+window.AU_TRY=()=>{if(!pending)return false;const s=st();if(s=="idle"){apply();return true}if(s=="work")toast();return false};
+window.AU_PENDING=()=>!!pending;
+async function check(){try{const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;const j=await r.json();
+ if(!j.v||j.v===CUR||CUR==="dev"||CUR.startsWith("__"))return;
+ if(sessionStorage.auTried===j.v&&!pending){pending=null;return}/* tránh vòng lặp nếu CDN còn trả bản cũ */
+ if(pending!==j.v){pending=j.v;if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js?v="+j.v,{scope:"./"}).catch(()=>{})}
+ AU_TRY()}catch(e){}}
+if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js?v="+CUR,{scope:"./"}).catch(()=>{}));
+setTimeout(check,2500);setInterval(check,5*60*1000);setInterval(()=>{if(pending)AU_TRY()},3000);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")check()});addEventListener("focus",check);addEventListener("online",check);
+})();</script>
+</body></html>

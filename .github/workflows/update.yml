@@ -23,6 +23,12 @@ jobs:
       - run: python scripts/fetch.py
       - run: python scripts/enrich.py
       - run: mkdir -p _site && cp -r index.html manifest.webmanifest sw.js icons data .nojekyll _site/ && du -sh _site _site/data/audio
+      - name: Ghi phiên bản
+        run: |
+          V=${GITHUB_SHA::12}
+          sed -i "s/__APP_VERSION__/$V/g" _site/index.html
+          echo "{\"v\":\"$V\",\"built\":\"$(date -u +%FT%TZ)\"}" > _site/version.json
+          cat _site/version.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with: {path: _site}
