@@ -2,18 +2,29 @@ name: Cập nhật tin
 on:
   schedule: [{cron: "*/30 * * * *"}]
   workflow_dispatch:
-permissions: {contents: write}
+  push: {branches: [main]}
+permissions: {contents: read, pages: write, id-token: write}
 concurrency: {group: news, cancel-in-progress: false}
 jobs:
-  fetch:
+  build:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment: {name: github-pages, url: "${{ steps.d.outputs.page_url }}"}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
-      - run: pip install trafilatura
+      - run: pip install trafilatura edge-tts
+      - uses: actions/cache@v4
+        with:
+          path: cache
+          key: bst-cache-${{ github.run_id }}
+          restore-keys: bst-cache-
       - run: python scripts/fetch.py
-      - run: |
-          git config user.name "bst-bot"; git config user.email "actions@users.noreply.github.com"
-          git add -A data
-          git diff --cached --quiet || (git commit -m "Cập nhật tin" && git pull --rebase -X ours && git push)
+      - run: python scripts/enrich.py
+      - run: mkdir -p _site && cp -r index.html manifest.webmanifest sw.js icons data .nojekyll _site/ && du -sh _site _site/data/audio
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: {path: _site}
+      - id: d
+        uses: actions/deploy-pages@v4

@@ -45,14 +45,21 @@ for x in sorted(items,key=lambda x:-x["time"]):
     if not x["title"] or k in seen or x["link"] in seen or x["time"]>now+3600: continue
     seen.add(k); seen.add(x["link"]); out.append(x)
 
+PERCH=100
+_c={}
+_o=[]
+for x in out:
+    _c[x["channel"]]=_c.get(x["channel"],0)+1
+    if _c[x["channel"]]<=PERCH: _o.append(x)
+out=_o
 TOPN=12
-os.makedirs("data/articles",exist_ok=True)
+ART="cache/articles";os.makedirs(ART,exist_ok=True);os.makedirs("data",exist_ok=True)
 for x in out: x["id"]=hashlib.sha1(x["link"].encode()).hexdigest()[:12]
 want=[]
 for ch in FEEDS:
     want+= [x for x in out if x["channel"]==ch][:TOPN]
 def extract(x):
-    p=f"data/articles/{x['id']}.json"
+    p=f"{ART}/{x['id']}.json"
     if os.path.exists(p): return True
     try:
         import trafilatura
@@ -74,10 +81,10 @@ with ThreadPoolExecutor(8) as ex: res=list(ex.map(extract,want))
 for x,r in zip(want,res):
     if r: x["full"]=1
 keep={x["id"] for x in out if x.get("full")}
-for f in os.listdir("data/articles"):
-    if f[:-5] not in keep: os.remove("data/articles/"+f)
+for f in os.listdir(ART):
+    if f[:-5] not in keep: os.remove(ART+"/"+f)
 for x in out:
-    if not x.get("full") and os.path.exists(f"data/articles/{x['id']}.json"): x["full"]=1
+    if not x.get("full") and os.path.exists(f"{ART}/{x['id']}.json"): x["full"]=1
 print("articles:",sum(res),"/",len(want))
 json.dump(dict(updated=int(now),sources_ok=ok,sources_failed=bad,items=out),open("data/news.json","w"),ensure_ascii=False)
 print(len(out),"items; ok",len(ok),"failed",bad)
